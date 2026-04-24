@@ -15,6 +15,9 @@
   --bg:#F4F6FB;--su:#FFF;--bd:#E2E6F0;
   --tx:#1A1A2E;--tm:#5A6478;--tl:#9AA3B8;
   --rad:10px;--sh:0 2px 10px rgba(26,26,46,.07);
+  --erl-dark:#1A2E4A;--erl-mid:#185FA5;--erl-light:#EBF3FC;
+  --erl-accent:#378ADD;--erl-border:#B5D4F4;--erl-text:#0C447C;
+  --erl-muted:#7EA8D4;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--tx);font-size:14px;min-height:100vh;}
@@ -221,7 +224,7 @@ body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--tx)
 
 /* ERLANG */
 .elay{display:grid;grid-template-columns:400px 1fr;gap:18px;align-items:start;}
-.eres-hero{background:linear-gradient(135deg,var(--pr),var(--pr2));border-radius:var(--rad);padding:24px;text-align:center;color:#fff;margin-bottom:14px;}
+.eres-hero{background:linear-gradient(135deg,#1A2E4A,#185FA5);border-radius:var(--rad);padding:24px;text-align:center;color:#fff;margin-bottom:14px;}
 .eres-hero .el{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;opacity:.65;margin-bottom:6px;}
 .eres-hero .ev{font-size:60px;font-weight:700;line-height:1;}
 .eres-hero .es{font-size:12px;opacity:.65;margin-top:5px;}
@@ -231,8 +234,10 @@ body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--tx)
 .emb .l{font-size:10px;color:var(--tm);font-weight:600;text-transform:uppercase;letter-spacing:.4px;margin-top:1px;}
 .einfo{background:var(--ors);border:1px solid #F5C6A8;border-radius:8px;padding:13px 15px;font-size:12px;color:#7A2C00;line-height:1.6;margin-top:12px;}
 .estep{display:flex;align-items:flex-start;gap:9px;margin-bottom:8px;}
-.esn{width:19px;height:19px;background:var(--or);color:#fff;border-radius:50%;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.esn{width:19px;height:19px;background:#185FA5;color:#fff;border-radius:50%;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
 
+#tab-btn-erlang.act{color:#185FA5;border-bottom-color:#185FA5;}
+#tab-btn-erlang:hover{color:#185FA5;}
 @media(max-width:900px){
   .lay2,.lay3,.kpi4,.elay{grid-template-columns:1fr!important;}
   .kpi4{grid-template-columns:1fr 1fr!important;}
@@ -260,7 +265,7 @@ body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--tx)
 <nav class="tabs">
   <button class="tbtn act" onclick="goTab('randevu',this)">🩺 Randevu Asistanı</button>
   <button class="tbtn" onclick="goTab('dashboard',this)">📊 Dashboard</button>
-  <button class="tbtn" onclick="goTab('erlang',this)">🔢 Kapasite Hesaplama</button>
+  <button class="tbtn" onclick="goTab('erlang',this)" id="tab-btn-erlang">🔢 Kapasite Hesaplama</button>
 </nav>
 
 <main class="main">
@@ -540,17 +545,30 @@ body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--tx)
 </div>
 
 <!-- ===== ERLANG ===== -->
-<div id="tab-erlang" class="panel">
-  <div style="background:linear-gradient(135deg,var(--pr) 0%,var(--pr2) 100%);border-radius:var(--rad);padding:14px 20px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+<div id="tab-erlang" class="panel" style="--epr:#1A2E4A;--epr2:#185FA5;--eprs:#EBF3FC;--epbr:#B5D4F4;">
+  <div style="background:#1A2E4A;border-radius:var(--rad);padding:14px 20px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
   <div style="font-size:12px;color:rgba(255,255,255,0.7);font-style:italic;">
     © 2026 Tüm hakları <strong style="color:#fff;">Volkan EREN</strong>'e aittir. Bu sistem fikri mülkiyettir, izinsiz kullanılamaz.
   </div>
   <div style="font-size:12px;color:rgba(255,255,255,0.7);">
-    İletişim: <a href="mailto:volkaneren34@hotmail.com" style="color:var(--or2);text-decoration:none;font-weight:600;">volkaneren34@hotmail.com</a>
+    İletişim: <a href="mailto:volkaneren34@hotmail.com" style="color:#7EA8D4;text-decoration:none;font-weight:600;">volkaneren34@hotmail.com</a>
   </div>
 </div>
 
-  <div class="elay">
+  <style>
+#tab-erlang .ctitle::before{background:#185FA5!important;}
+#tab-erlang .ctitle{color:#1A2E4A!important;}
+#tab-erlang .bor{background:#1A2E4A!important;}
+#tab-erlang .bor:hover{background:#185FA5!important;}
+#tab-erlang .finput:focus{border-color:#185FA5!important;}
+#tab-erlang .fsel:focus{border-color:#185FA5!important;}
+#tab-erlang .eres-hero{background:linear-gradient(135deg,#1A2E4A,#185FA5)!important;}
+#tab-erlang .einfo{background:#EBF3FC!important;border-color:#B5D4F4!important;color:#0C447C!important;}
+#tab-erlang .esn{background:#185FA5!important;}
+#tab-erlang .emb .v{color:#1A2E4A!important;}
+.etbl tr.opt td{background:#EBF3FC!important;}
+</style>
+<div class="elay">
     <div>
       <div class="card">
         <div class="ctitle">Parametre Girişi</div>
@@ -563,16 +581,16 @@ body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--tx)
         <div class="fgrp"><label class="flabel">Shrinkage / Kayıp Oranı (%)</label><input type="number" id="e-shrink" class="finput" value="25" min="0" max="60"></div>
         <div class="fgrp"><label class="flabel">Hedef Hizmet Seviyesi (%)</label><input type="number" id="e-sl" class="finput" value="80" min="50" max="99"></div>
         <div class="fgrp"><label class="flabel">Hedef Cevaplama Süresi (sn)</label><input type="number" id="e-tgt" class="finput" value="20" min="1"></div>
-        <button class="bor bfull" onclick="calcE()">🔢 Hesapla</button>
+        <button style="background:#1A2E4A;color:#fff;border:none;padding:10px 22px;border-radius:7px;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;width:100%;transition:opacity .2s;" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'" onclick="calcE()">🔢 Hesapla</button>
       </div>
       <div class="card">
-        <div class="ctitle">Erlang C Nedir?</div>
+        <div class="ctitle">Nasıl Çalışır?</div>
         <div style="font-size:12px;color:var(--tm);line-height:1.7;">
-          <div class="estep"><div class="esn">1</div><div><strong>Çağrı yükü (A) hesaplanır.</strong> Saatlik çağrı × AHT ÷ 3600 = Erlang A. Kaç agent'ın sürekli meşgul kalacağını gösterir.</div></div>
-          <div class="estep"><div class="esn">2</div><div><strong>Erlang C formülü uygulanır.</strong> Rastgele çağrıları ve bekleme sırasını modelleyen matematiksel formüldür.</div></div>
+          <div class="estep"><div class="esn">1</div><div><strong>Çağrı yükü (A) hesaplanır.</strong> Saatlik çağrı × AHT ÷ 3600 = Trafik Yoğunluğu (A). Kaç agent'ın sürekli meşgul kalacağını gösterir.</div></div>
+          <div class="estep"><div class="esn">2</div><div><strong>Matematiksel formül uygulanır.</strong> Rastgele çağrıları ve bekleme sırasını modelleyen matematiksel formüldür.</div></div>
           <div class="estep"><div class="esn">3</div><div><strong>Shrinkage eklenir.</strong> Mola, toplantı, eğitim kayıpları dahil edilir. Saf ihtiyaç ÷ (1−Shrinkage%) = Nihai.</div></div>
           <div class="estep"><div class="esn">4</div><div><strong>Hizmet seviyesi doğrulanır.</strong> Farklı agent sayıları için tablo gösterilir.</div></div>
-          <div style="margin-top:10px;padding:10px 12px;background:var(--ors);border-radius:7px;font-size:11px;color:#7A2C00;"><strong>⚠️ Not:</strong> Erlang C kimsenin kapamadığını varsayar. Gerçekte abandon rate de dikkate alınmalıdır.</div>
+          <div style="margin-top:10px;padding:10px 12px;background:var(--ors);border-radius:7px;font-size:11px;color:#7A2C00;"><strong>⚠️ Not:</strong> kapasite hesaplama kimsenin kapamadığını varsayar. Gerçekte abandon rate de dikkate alınmalıdır.</div>
         </div>
       </div>
     </div>
@@ -1302,12 +1320,12 @@ function calcE(){
     <div class="es">Shrinkage (%${Math.round(shrink*100)}) dahil — Saf ihtiyaç: ${raw} agent</div>
   </div>
   <div style="font-size:12px;color:var(--tm);padding:10px 13px;background:var(--bg);border-radius:8px;line-height:1.8;">
-    <strong>Çağrı yükü:</strong> ${cph.toFixed(0)}/saat &nbsp;·&nbsp; <strong>Toplam AHT:</strong> ${T}sn &nbsp;·&nbsp; <strong>Erlang A:</strong> ${A.toFixed(2)}
+    <strong>Çağrı yükü:</strong> ${cph.toFixed(0)}/saat &nbsp;·&nbsp; <strong>Toplam AHT:</strong> ${T}sn &nbsp;·&nbsp; <strong>Trafik Yoğunluğu (A):</strong> ${A.toFixed(2)}
   </div>`;
 
   document.getElementById('e-detail').style.display='block';
   document.getElementById('e-metrics').innerHTML=`
-    <div class="emb"><div class="v">${A.toFixed(2)}</div><div class="l">Erlang A</div></div>
+    <div class="emb"><div class="v">${A.toFixed(2)}</div><div class="l">Trafik Yoğunluğu (A)</div></div>
     <div class="emb"><div class="v">%${Math.round(sl*100)}</div><div class="l">Hizmet Sev.</div></div>
     <div class="emb"><div class="v">%${util}</div><div class="l">Kullanım</div></div>
     <div class="emb"><div class="v">${avgW}sn</div><div class="l">Ort. Bekleme</div></div>
