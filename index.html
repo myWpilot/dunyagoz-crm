@@ -869,7 +869,7 @@ function buildKriterNotu(dr, unvanTercihi, tercihGunler) {
   if (unvanTercihi && unvanTercihi !== 'Fark etmez') {
     const map = {'Profesör':'Prof','Doçent':'Doç','Operatör Dr.':'Op'};
     if (dr.unvan === map[unvanTercihi]) notlar.push(`🎓 Unvan: Hasta "${unvanTercihi}" tercih etti — uyuşuyor`);
-    else notlar.push(`🎓 Unvan: Hasta "${unvanTercihi}" tercih etti — en uygun müsait uzman bu`);
+    else notlar.push(`⚠️ Hasta "${unvanTercihi}" tercih etti ancak tercih edilen unvandan doktor seçilen gün/şubede müsait değil — en uygun alternatif önerildi`);
   }
   // Uzmanlık
   const sikayet = picks['q-sikayet'] || '';
@@ -909,6 +909,27 @@ function showDrCard(dr, uygunluk, isFirst) {
     <div><span class="dunvan ${unvanClass(dr.unvan)}">${unvanLabel(dr.unvan)}</span></div>
     <div class="dsp" style="margin-top:4px;">${dr.spec}</div>
     ${uygunluk ? `<div class="drs" style="margin-top:6px;">${uygunluk}</div>` : ''}
+    ${(()=>{
+      const ut = picks['q-unvan']||'';
+      if(!ut || ut==='Fark etmez') return '';
+      const umap = {'Profesör':'Prof','Doçent':'Doç','Operatör Dr.':'Op'};
+      if(dr.unvan === umap[ut]) return '';
+      const hospDrs = HOSP[picks['q-hastane']]?.doctors || [];
+      const gt = multiPicks['q-gun']||[];
+      const istenenDrlar = hospDrs.filter(d=>d.unvan===umap[ut]);
+      let neden = '';
+      if(istenenDrlar.length===0){
+        neden = ut+' unvanlı doktor bu şubede bulunmuyor.';
+      } else {
+        const gunUyumlu = istenenDrlar.filter(d=>gt.length===0||gt.some(g=>d.gunler.includes(g)));
+        if(gunUyumlu.length===0){
+          neden = ut+' unvanlı doktor seçilen günde çalışmıyor.';
+        } else {
+          neden = ut+' unvanlı doktor doluluk yoğunluğu nedeniyle sırada geride kaldı.';
+        }
+      }
+      return '<div style="background:#FEF9C3;border:1px solid #FDE047;border-radius:7px;padding:8px 12px;margin-top:8px;font-size:11px;color:#854D0E;display:flex;gap:7px;align-items:flex-start;"><span>⚠️</span><span><strong>Unvan uyarısı:</strong> '+neden+'</span></div>';
+    })()}
     <div class="ddol" style="margin-top:8px;">
       <div class="ddol-bar"><div class="ddol-fill ${dolClass(dr.doluluk)}" style="width:${dr.doluluk}%"></div></div>
       <div class="ddol-lbl" style="color:${dolColor(dr.doluluk)}">%${dr.doluluk} dolu</div>
