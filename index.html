@@ -3,1383 +3,415 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dünyagöz — Çağrı Merkezi</title>
+<title>Kapasite Hesaplama Aracı</title>
+<script defer src="/_vercel/insights/script.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --or:#E8470A;--or2:#F26522;--ors:#FEF0EB;--orb:#BF360C;
-  --pr:#1A1A2E;--pr2:#2D3A5E;--pr3:#3D5080;
+  --pr:#1A2E4A;--pr2:#185FA5;--pr3:#EBF3FC;--pr4:#B5D4F4;
   --gr:#1A7F4B;--grs:#E6F4ED;
-  --wa:#B45309;--was:#FEF3C7;
   --re:#B91C1C;--res:#FEE2E2;
+  --wa:#B45309;--was:#FEF3C7;
   --bg:#F4F6FB;--su:#FFF;--bd:#E2E6F0;
-  --tx:#1A1A2E;--tm:#5A6478;--tl:#9AA3B8;
-  --rad:10px;--sh:0 2px 10px rgba(26,26,46,.07);
-  --erl-dark:#1A2E4A;--erl-mid:#185FA5;--erl-light:#EBF3FC;
-  --erl-accent:#378ADD;--erl-border:#B5D4F4;--erl-text:#0C447C;
-  --erl-muted:#7EA8D4;
+  --tx:#1A2E4A;--tm:#5A6478;--tl:#9AA3B8;
+  --rad:10px;--sh:0 2px 10px rgba(26,46,74,.08);
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--tx);font-size:14px;min-height:100vh;}
 
-.hdr{background:#fff;border-bottom:3px solid var(--or);padding:0 28px;display:flex;align-items:center;justify-content:space-between;height:66px;box-shadow:0 2px 8px rgba(0,0,0,.06);}
-.logo{display:flex;align-items:center;gap:14px;}
-.sphere{width:42px;height:42px;background:radial-gradient(circle at 35% 35%,#FF7043,#E8470A 55%,#BF360C);border-radius:50%;box-shadow:2px 3px 8px rgba(232,71,10,.35);flex-shrink:0;}
-.logo-txt .nm{font-size:21px;font-weight:700;color:#111;letter-spacing:-.3px;line-height:1;}
-.logo-txt .nm span{color:var(--or);}
-.logo-txt .sl{font-size:9px;font-weight:700;color:#888;letter-spacing:2px;text-transform:uppercase;margin-top:2px;}
-.logo-div{width:1px;height:34px;background:var(--bd);margin:0 10px;}
-.logo-sub{font-size:11px;color:var(--tm);font-weight:600;}
-.hdr-r{font-size:12px;color:var(--tm);}
-.hdr-r strong{color:var(--tx);}
+/* HEADER */
+.hdr{background:var(--pr);padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:60px;box-shadow:0 2px 8px rgba(0,0,0,.15);}
+.hdr-left{display:flex;align-items:center;gap:12px;}
+.hdr-icon{width:32px;height:32px;background:rgba(255,255,255,.15);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;}
+.hdr-title{color:white;font-size:15px;font-weight:700;letter-spacing:.3px;}
+.hdr-sub{color:rgba(255,255,255,.55);font-size:11px;margin-top:1px;}
+.hdr-right{font-size:11px;color:rgba(255,255,255,.5);}
+.hdr-right a{color:rgba(255,255,255,.7);text-decoration:none;}
+.hdr-right a:hover{color:white;}
 
-.tabs{background:#fff;border-bottom:1px solid var(--bd);display:flex;padding:0 28px;overflow-x:auto;}
-.tbtn{padding:14px 20px;border:none;background:none;cursor:pointer;font-family:inherit;font-size:13px;font-weight:600;color:var(--tm);border-bottom:3px solid transparent;transition:all .2s;display:flex;align-items:center;gap:6px;white-space:nowrap;margin-bottom:-1px;}
-.tbtn:hover{color:var(--or);}
-.tbtn.act{color:var(--or);border-bottom-color:var(--or);}
+/* MAIN */
+.main{padding:28px 32px;max-width:1100px;margin:0 auto;}
 
-.main{padding:22px 28px;}
-.panel{display:none;}
-.panel.act{display:block;}
+/* LAYOUT */
+.layout{display:grid;grid-template-columns:400px 1fr;gap:22px;align-items:start;}
 
-.card{background:var(--su);border:1px solid var(--bd);border-radius:var(--rad);box-shadow:var(--sh);padding:20px;margin-bottom:16px;}
-.ctitle{font-size:11px;font-weight:700;color:var(--pr);text-transform:uppercase;letter-spacing:.8px;margin-bottom:14px;display:flex;align-items:center;gap:7px;}
-.ctitle::before{content:'';width:3px;height:12px;background:var(--or);border-radius:2px;}
+/* CARD */
+.card{background:var(--su);border:1px solid var(--bd);border-radius:var(--rad);box-shadow:var(--sh);padding:22px;margin-bottom:16px;}
+.ctitle{font-size:11px;font-weight:700;color:var(--pr);text-transform:uppercase;letter-spacing:.8px;margin-bottom:16px;display:flex;align-items:center;gap:7px;}
+.ctitle::before{content:'';width:3px;height:12px;background:var(--pr2);border-radius:2px;}
 
+/* FORM */
 .flabel{display:block;font-size:11px;font-weight:700;color:var(--tm);margin-bottom:4px;text-transform:uppercase;letter-spacing:.4px;}
-.finput{width:100%;padding:8px 11px;border:1.5px solid var(--bd);border-radius:7px;font-family:inherit;font-size:14px;color:var(--tx);background:var(--bg);outline:none;transition:border-color .2s;}
-.finput:focus{border-color:var(--or);background:#fff;}
-.fsel{width:100%;padding:8px 11px;border:1.5px solid var(--bd);border-radius:7px;font-family:inherit;font-size:14px;color:var(--tx);background:var(--bg);outline:none;cursor:pointer;}
-.fsel:focus{border-color:var(--or);}
-.fgrp{margin-bottom:13px;}
+.flabel .tip{font-size:10px;font-weight:400;color:var(--tl);text-transform:none;letter-spacing:0;margin-left:4px;}
+.finput{width:100%;padding:9px 12px;border:1.5px solid var(--bd);border-radius:7px;font-family:inherit;font-size:14px;color:var(--tx);background:var(--bg);outline:none;transition:border-color .2s;}
+.finput:focus{border-color:var(--pr2);background:#fff;}
+.fsel{width:100%;padding:9px 12px;border:1.5px solid var(--bd);border-radius:7px;font-family:inherit;font-size:14px;color:var(--tx);background:var(--bg);outline:none;cursor:pointer;}
+.fsel:focus{border-color:var(--pr2);}
+.fgrp{margin-bottom:14px;}
 
-.bor{background:var(--or);color:#fff;border:none;padding:10px 22px;border-radius:7px;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:opacity .2s;}
-.bor:hover{opacity:.88;}
-.bor:disabled{opacity:.45;cursor:not-allowed;}
-.bsec{background:#fff;color:var(--tm);border:1.5px solid var(--bd);padding:9px 18px;border-radius:7px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;}
-.bsec:hover{border-color:var(--or);color:var(--or);}
-.bfull{width:100%;justify-content:center;}
+/* BUTTON */
+.btn{background:var(--pr);color:#fff;border:none;padding:11px 24px;border-radius:7px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;width:100%;transition:background .2s;display:flex;align-items:center;justify-content:center;gap:8px;}
+.btn:hover{background:var(--pr2);}
+.btn:disabled{opacity:.45;cursor:not-allowed;}
+.btn-outline{background:#fff;color:var(--pr);border:1.5px solid var(--pr);padding:10px 24px;border-radius:7px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;width:100%;transition:all .2s;margin-top:8px;}
+.btn-outline:hover{background:var(--pr3);}
 
-.qblock{margin-bottom:12px;}
-.qlabel{font-size:11px;font-weight:700;color:var(--tm);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;display:flex;align-items:center;gap:6px;}
-.qnum{width:17px;height:17px;background:var(--or);color:#fff;border-radius:50%;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.qopts{display:flex;flex-wrap:wrap;gap:5px;}
-.qopt{padding:5px 13px;border:1.5px solid var(--bd);border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;background:#fff;color:var(--tm);transition:all .15s;}
-.qopt:hover{border-color:var(--or);color:var(--or);}
-.qopt.sel{background:var(--or);border-color:var(--or);color:#fff;}
+/* RESULT HERO */
+.result-hero{background:linear-gradient(135deg,var(--pr) 0%,var(--pr2) 100%);border-radius:var(--rad);padding:26px;text-align:center;color:#fff;margin-bottom:16px;}
+.result-hero .lbl{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;opacity:.65;margin-bottom:8px;}
+.result-hero .num{font-size:68px;font-weight:700;line-height:1;}
+.result-hero .sub{font-size:12px;opacity:.65;margin-top:6px;}
 
-.lay2{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start;}
-.lay3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+/* METRICS */
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;}
+.metric{background:var(--bg);border:1px solid var(--bd);border-radius:8px;padding:13px;text-align:center;}
+.metric .v{font-size:20px;font-weight:700;color:var(--pr);}
+.metric .l{font-size:10px;color:var(--tm);font-weight:600;text-transform:uppercase;letter-spacing:.4px;margin-top:2px;}
 
-.ph{display:flex;flex-direction:column;align-items:center;justify-content:center;height:180px;color:var(--tl);gap:8px;font-size:13px;}
-.ph .ico{font-size:32px;}
-.spin{width:18px;height:18px;border:2px solid var(--bd);border-top-color:var(--or);border-radius:50%;animation:spin .8s linear infinite;}
-@keyframes spin{to{transform:rotate(360deg);}}
-.ldg{display:flex;align-items:center;gap:9px;color:var(--tm);font-size:13px;padding:20px 0;}
+.info-box{background:var(--pr3);border:1px solid var(--pr4);border-radius:8px;padding:13px 15px;font-size:12px;color:#0C447C;line-height:1.6;margin-bottom:14px;}
 
-/* DOKTOR KARTLARI — ciro GİZLİ */
-.dcard{border:1.5px solid var(--bd);border-radius:9px;padding:13px 15px;margin-bottom:9px;position:relative;transition:border-color .2s;}
-.dcard.top{border-color:var(--gr);background:var(--grs);}
-.dcard.rank2{border-color:#C4A000;background:#FFFDF0;}
-.drank{position:absolute;top:10px;right:10px;background:var(--pr);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:12px;}
-.dcard.top .drank{background:var(--gr);}
-.dcard.rank2 .drank{background:#C4A000;}
-.dnm{font-size:14px;font-weight:700;color:var(--tx);margin-bottom:2px;}
-.dunvan{display:inline-block;padding:1px 8px;border-radius:10px;font-size:10px;font-weight:700;margin-bottom:4px;}
-.dunvan-prof{background:#EDE9FF;color:#6B21A8;}
-.dunvan-doc{background:#DBEAFE;color:#1D4ED8;}
-.dunvan-op{background:var(--grs);color:var(--gr);}
-.dsp{font-size:12px;color:var(--tm);margin-bottom:4px;}
-.drs{font-size:12px;color:var(--tm);font-style:italic;margin-bottom:6px;}
-.ddol{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
-.ddol-bar{flex:1;height:5px;background:var(--bd);border-radius:3px;overflow:hidden;}
-.ddol-fill{height:100%;border-radius:3px;}
-.ddol-lbl{font-size:11px;font-weight:700;min-width:32px;}
-.dmeta{font-size:11px;color:var(--tm);}
-.dmeta strong{color:var(--tx);}
-.btn-take{background:var(--or);color:#fff;border:none;padding:7px 16px;border-radius:6px;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;transition:opacity .2s;}
-.btn-take:hover{opacity:.85;}
-.btn-baska{background:#fff;color:var(--pr);border:1.5px solid var(--bd);padding:7px 14px;border-radius:6px;font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;}
-.btn-baska:hover{border-color:var(--or);color:var(--or);}
-.prim-wrap{display:inline-flex;align-items:center;gap:5px;position:relative;}
-.prim-ico{display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;background:var(--pr2);color:#fff;border-radius:50%;font-size:9px;font-weight:700;cursor:pointer;flex-shrink:0;line-height:1;}
-.prim-txt{font-size:11px;font-style:italic;color:var(--gr);font-weight:600;}
-.prim-note{font-size:10px;font-style:italic;color:var(--tl);margin-top:2px;}
-.mt-note{background:#F0F4FF;border:1px dashed #B0BCD8;border-radius:7px;padding:9px 12px;margin-top:10px;font-size:11px;}
-.mt-note-header{display:flex;align-items:center;gap:6px;margin-bottom:4px;}
-.mt-note-ico{display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;background:var(--pr2);color:#fff;border-radius:50%;font-size:9px;font-weight:700;flex-shrink:0;}
-.mt-note-warn{font-size:10px;font-style:italic;color:#8B95B2;}
-.mt-note-body{font-size:11px;font-style:italic;color:var(--pr2);line-height:1.6;}
-.btn-baska{background:#fff;color:var(--pr);border:1.5px solid var(--bd);padding:7px 16px;border-radius:6px;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;}
-.btn-baska:hover{border-color:var(--or);color:var(--or);}
-.tnote{background:var(--was);border:1px solid #F5D190;border-radius:8px;padding:11px 13px;font-size:12px;color:var(--wa);margin-top:8px;}
-.acil{display:inline-block;padding:3px 11px;border-radius:12px;font-size:11px;font-weight:700;margin-bottom:8px;}
-.acil-H{background:var(--res);color:var(--re);}
-.acil-O{background:var(--was);color:var(--wa);}
-.acil-L{background:var(--grs);color:var(--gr);}
+/* SL TABLE */
+.sl-table{width:100%;border-collapse:collapse;font-size:12px;}
+.sl-table th{padding:7px 10px;text-align:left;background:var(--bg);font-weight:700;color:var(--tm);border-bottom:1px solid var(--bd);font-size:11px;text-transform:uppercase;letter-spacing:.4px;}
+.sl-table td{padding:7px 10px;border-bottom:1px solid var(--bd);color:var(--tx);}
+.sl-table tr.opt td{background:var(--pr3);font-weight:700;}
+.sl-table tr:last-child td{border:none;}
 
-/* TAKVİM */
-.cal-head{background:var(--pr);color:#fff;padding:14px 18px;border-radius:var(--rad) var(--rad) 0 0;display:flex;align-items:center;justify-content:space-between;}
-.cal-head h3{font-size:14px;font-weight:700;}
-.cal-head .sub{font-size:11px;opacity:.65;margin-top:2px;}
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);}
-.cal-dow{padding:7px 4px;text-align:center;font-size:10px;font-weight:700;color:var(--tm);text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid var(--bd);background:#FAFBFD;}
-.cday{padding:7px 4px;min-height:42px;text-align:center;border:1px solid var(--bd);font-size:13px;transition:all .15s;position:relative;}
-.cday.empty{background:#FAFAFA;}
-.cday.off{background:#F5F5F5;color:#CCC;cursor:not-allowed;}
-.cday.avail{cursor:pointer;background:#fff;}
-.cday.avail:hover{background:var(--ors);border-color:var(--or);}
-.cday.sel-day{background:var(--or)!important;border-color:var(--or)!important;}
-.cday.sel-day .dn{color:#fff!important;}
-.cday.today .dn{color:var(--or);font-weight:700;}
-.dn{font-weight:600;font-size:13px;color:var(--tx);}
-.cdots{display:flex;justify-content:center;gap:2px;margin-top:3px;}
-.dot{width:5px;height:5px;border-radius:50%;}
-.dot-R{background:var(--re);}
-.dot-O{background:var(--wa);}
-.dot-G{background:var(--gr);}
+/* STEPS */
+.step{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;}
+.step-n{width:20px;height:20px;background:var(--pr2);color:#fff;border-radius:50%;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.step-txt{font-size:12px;color:var(--tm);line-height:1.7;}
 
-.slots-wrap{padding:14px 16px;border-top:1px solid var(--bd);background:#F8FAFF;}
-.slots-hd{font-size:12px;font-weight:700;color:var(--pr);margin-bottom:9px;display:flex;justify-content:space-between;align-items:center;}
-.slots-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;}
-.slot{padding:8px 4px;border:1.5px solid var(--bd);border-radius:7px;text-align:center;font-size:12px;font-weight:600;cursor:pointer;background:#fff;color:var(--tx);transition:all .15s;}
-.slot:hover{border-color:var(--or);color:var(--or);}
-.slot.dolu{background:#F5F5F5;color:#BBB;cursor:not-allowed;border-color:#EEE;}
-.slot.sel-slot{background:var(--or);border-color:var(--or);color:#fff;}
+/* EMAIL GATE */
+.email-gate{background:linear-gradient(135deg,var(--pr) 0%,#0F4C8A 100%);border-radius:var(--rad);padding:28px;text-align:center;color:#fff;}
+.email-gate .ico{font-size:36px;margin-bottom:12px;}
+.email-gate h3{font-size:17px;font-weight:700;margin-bottom:6px;}
+.email-gate p{font-size:13px;opacity:.8;line-height:1.6;margin-bottom:20px;}
+.email-input-wrap{display:flex;gap:8px;max-width:400px;margin:0 auto;}
+.email-input{flex:1;padding:11px 14px;border:none;border-radius:7px;font-family:inherit;font-size:14px;outline:none;color:var(--tx);}
+.email-btn{background:var(--gr);color:#fff;border:none;padding:11px 20px;border-radius:7px;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;transition:opacity .2s;}
+.email-btn:hover{opacity:.88;}
+.email-btn:disabled{opacity:.5;cursor:not-allowed;}
+.email-note{font-size:11px;opacity:.55;margin-top:10px;}
+.email-err{font-size:12px;color:#FCA5A5;margin-top:8px;}
 
-/* ONAY */
-.confirm-box{background:linear-gradient(135deg,var(--pr) 0%,var(--pr2) 100%);border-radius:var(--rad);padding:22px;color:#fff;margin-top:0;}
-.confirm-box h4{font-size:14px;font-weight:700;margin-bottom:14px;}
-.crow{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.12);font-size:13px;}
-.crow:last-of-type{border:none;}
-.clbl{opacity:.6;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.4px;}
-.cval{font-weight:700;}
-.cscript{background:rgba(255,255,255,.08);border-radius:8px;padding:13px 15px;margin-top:14px;font-size:13px;line-height:1.7;color:rgba(255,255,255,.9);border-left:3px solid var(--or);}
-.cscript .slbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--or);margin-bottom:5px;}
-.btn-cfm{background:var(--gr);color:#fff;border:none;padding:12px;border-radius:7px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;width:100%;margin-top:14px;}
-.btn-cfm:hover{opacity:.88;}
-.btn-cnc{background:rgba(255,255,255,.1);color:rgba(255,255,255,.75);border:none;padding:10px;border-radius:7px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;width:100%;margin-top:6px;}
-.success-box{background:var(--grs);border:2px solid var(--gr);border-radius:var(--rad);padding:22px;text-align:center;}
-.success-box .sico{font-size:40px;margin-bottom:10px;}
-.success-box h4{font-size:16px;font-weight:700;color:var(--gr);margin-bottom:6px;}
+/* PLACEHOLDER */
+.ph{display:flex;flex-direction:column;align-items:center;justify-content:center;height:200px;color:var(--tl);gap:8px;font-size:13px;}
+.ph .ico{font-size:36px;}
 
-/* DASHBOARD */
-.dash-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
-.per-tabs{display:flex;gap:3px;background:var(--bd);padding:3px;border-radius:7px;}
-.prbtn{padding:5px 14px;border:none;background:none;border-radius:5px;font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;color:var(--tm);transition:all .2s;}
-.prbtn.act{background:#fff;color:var(--or);box-shadow:0 1px 4px rgba(0,0,0,.1);}
-.kpi4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;}
-.kpi{background:#fff;border:1px solid var(--bd);border-radius:var(--rad);padding:16px;box-shadow:var(--sh);}
-.kpil{font-size:10px;font-weight:700;color:var(--tm);text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px;}
-.kpiv{font-size:24px;font-weight:700;color:var(--pr);}
-.kbdg{display:inline-block;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:700;margin-top:3px;}
-.bup{background:var(--grs);color:var(--gr);}
-.bdn{background:var(--res);color:var(--re);}
-.bwa{background:var(--was);color:var(--wa);}
+/* FOOTER */
+.footer{margin-top:24px;padding:14px 0;border-top:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+.footer-l{font-size:11px;color:var(--tl);font-style:italic;}
+.footer-l strong{color:var(--tm);}
+.footer-r{font-size:11px;color:var(--tl);}
+.footer-r a{color:var(--pr2);text-decoration:none;font-weight:600;}
 
-/* dash sections */
-.dsect{margin-bottom:24px;}
-.dsect-title{font-size:13px;font-weight:700;color:var(--pr);margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid var(--or);display:flex;align-items:center;gap:8px;}
-.dsect-title .badge{background:var(--or);color:#fff;font-size:10px;padding:2px 8px;border-radius:10px;}
-
-/* hastane filter */
-.hosp-filter{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;}
-.hfbtn{padding:6px 14px;border:1.5px solid var(--bd);border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;background:#fff;color:var(--tm);transition:all .15s;font-family:inherit;}
-.hfbtn:hover{border-color:var(--or);color:var(--or);}
-.hfbtn.sel{background:var(--or);border-color:var(--or);color:#fff;}
-
-.hr{display:flex;align-items:center;gap:9px;padding:9px 0;border-bottom:1px solid var(--bd);}
-.hr:last-child{border:none;}
-.hn{font-weight:600;font-size:12px;min-width:130px;}
-.pb{flex:1;height:7px;background:var(--bd);border-radius:4px;overflow:hidden;}
-.pf{height:100%;border-radius:4px;transition:width .5s;}
-.pfH{background:var(--gr);}
-.pfM{background:#F59E0B;}
-.pfL{background:var(--or);}
-.pfX{background:var(--re);}
-.hp{font-weight:700;font-size:12px;min-width:34px;text-align:right;}
-
-.drw{display:flex;align-items:center;gap:7px;padding:8px 0;border-bottom:1px solid var(--bd);}
-.drw:last-child{border:none;}
-.dav{width:30px;height:30px;border-radius:50%;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.din .nm{font-weight:600;font-size:12px;}
-.din .sp{font-size:10px;color:var(--tm);}
-.din .hs{font-size:10px;color:var(--tl);}
-.dbw{flex:1;height:5px;background:var(--bd);border-radius:3px;overflow:hidden;}
-.dbf{height:100%;border-radius:3px;}
-.dpct{font-weight:700;font-size:11px;min-width:30px;text-align:right;color:var(--tm);}
-
-.bcht{display:flex;align-items:flex-end;gap:4px;height:90px;padding:4px 0;}
-.bc{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;}
-.bb{width:100%;border-radius:3px 3px 0 0;min-height:3px;}
-.bl{font-size:9px;color:var(--tm);font-weight:600;}
-.bv{font-size:8px;color:var(--tm);}
-
-/* dr karşılaştırma tablosu */
-.cmp-table{width:100%;border-collapse:collapse;font-size:12px;}
-.cmp-table th{padding:8px 10px;text-align:left;background:var(--bg);font-weight:700;color:var(--tm);border-bottom:1px solid var(--bd);font-size:11px;text-transform:uppercase;letter-spacing:.4px;}
-.cmp-table td{padding:8px 10px;border-bottom:1px solid var(--bd);color:var(--tx);vertical-align:middle;}
-.cmp-table tr:last-child td{border:none;}
-.cmp-table tr:hover td{background:#FAFBFD;}
-
-/* ERLANG */
-.elay{display:grid;grid-template-columns:400px 1fr;gap:18px;align-items:start;}
-.eres-hero{background:linear-gradient(135deg,#1A2E4A,#185FA5);border-radius:var(--rad);padding:24px;text-align:center;color:#fff;margin-bottom:14px;}
-.eres-hero .el{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;opacity:.65;margin-bottom:6px;}
-.eres-hero .ev{font-size:60px;font-weight:700;line-height:1;}
-.eres-hero .es{font-size:12px;opacity:.65;margin-top:5px;}
-.emg{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;}
-.emb{background:var(--bg);border:1px solid var(--bd);border-radius:8px;padding:12px;text-align:center;}
-.emb .v{font-size:19px;font-weight:700;color:var(--pr);}
-.emb .l{font-size:10px;color:var(--tm);font-weight:600;text-transform:uppercase;letter-spacing:.4px;margin-top:1px;}
-.einfo{background:var(--ors);border:1px solid #F5C6A8;border-radius:8px;padding:13px 15px;font-size:12px;color:#7A2C00;line-height:1.6;margin-top:12px;}
-.estep{display:flex;align-items:flex-start;gap:9px;margin-bottom:8px;}
-.esn{width:19px;height:19px;background:#185FA5;color:#fff;border-radius:50%;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
-
-#tab-btn-erlang.act{color:#185FA5;border-bottom-color:#185FA5;}
-#tab-btn-erlang:hover{color:#185FA5;}
-@media(max-width:900px){
-  .lay2,.lay3,.kpi4,.elay{grid-template-columns:1fr!important;}
-  .kpi4{grid-template-columns:1fr 1fr!important;}
-  .main{padding:12px;}
-  .hdr{padding:0 12px;}
-  .tabs{padding:0 8px;}
+@media(max-width:800px){
+  .layout{grid-template-columns:1fr;}
+  .main{padding:14px;}
+  .hdr{padding:0 14px;}
+  .metrics{grid-template-columns:1fr 1fr;}
+  .email-input-wrap{flex-direction:column;}
 }
 </style>
-<script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
 
 <header class="hdr">
-  <div class="logo">
-    <div class="sphere"></div>
-    <div class="logo-txt">
-      <div class="nm">Dünya<span>göz</span></div>
-      <div class="sl">Dünya Görmeye Değer</div>
+  <div class="hdr-left">
+    <div class="hdr-icon">📊</div>
+    <div>
+      <div class="hdr-title">Kapasite Hesaplama Aracı</div>
+      <div class="hdr-sub">Çağrı Merkezi Planlama</div>
     </div>
-    <div class="logo-div"></div>
-    <div class="logo-sub">Çağrı Merkezi Sistemi</div>
   </div>
-  <div class="hdr-r">444 4 469 &nbsp;·&nbsp; <strong>Demo Temsilci</strong> &nbsp;·&nbsp; Nisan 2026</div>
+  <div class="hdr-right">
+    <a href="mailto:volkaneren34@hotmail.com">volkaneren34@hotmail.com</a>
+  </div>
 </header>
 
-<nav class="tabs">
-  <button class="tbtn act" onclick="goTab('randevu',this)">🩺 Randevu Asistanı</button>
-  <button class="tbtn" onclick="goTab('dashboard',this)">📊 Dashboard</button>
-  <button class="tbtn" onclick="goTab('erlang',this)" id="tab-btn-erlang">🔢 Kapasite Hesaplama</button>
-</nav>
-
 <main class="main">
+  <div class="layout">
 
-<!-- ===== RANDEVU ===== -->
-<div id="tab-randevu" class="panel act">
-  <div style="background:#FEF9C3;border:1px solid #FDE047;border-radius:8px;padding:10px 16px;margin-bottom:18px;display:flex;align-items:center;gap:10px;">
-  <span style="font-size:16px;">⚠️</span>
-  <div>
-    <span style="font-size:12px;font-weight:700;color:#854D0E;">DEMO ÇALIŞMASI</span>
-    <span style="font-size:12px;color:#92400E;margin-left:8px;">Bu sistem Dünyagöz Hastanesi için geliştirilmiş bir demo çalışmasıdır. Gerçek hasta verisi içermez.</span>
-  </div>
-</div>
-
-  <div class="lay2">
-    <div>
-      <div class="card">
-        <div class="ctitle">Hasta Bilgi Formu</div>
-        <div class="fgrp">
-          <label class="flabel">Hasta Adı Soyadı</label>
-          <input type="text" id="hasta-ad" class="finput" placeholder="Ad Soyad giriniz…">
-        </div>
-        <div class="qblock">
-          <div class="qlabel"><span class="qnum">1</span>Hangi hastanemize gelmek istersiniz?</div>
-          <div class="qopts" id="q-hastane">
-            <span class="qopt" onclick="qsel(this,'q-hastane','İstanbul-Etiler')">İstanbul-Etiler</span>
-            <span class="qopt" onclick="qsel(this,'q-hastane','İstanbul-Ataköy')">İstanbul-Ataköy</span>
-            <span class="qopt" onclick="qsel(this,'q-hastane','Ankara')">Ankara</span>
-          </div>
-        </div>
-        <div class="qblock">
-          <div class="qlabel"><span class="qnum">2</span>Şikayetiniz nedir?</div>
-          <div class="qopts" id="q-sikayet">
-            <span class="qopt" onclick="qsel(this,'q-sikayet','Genel Göz')">Genel Göz</span>
-            <span class="qopt" onclick="qsel(this,'q-sikayet','Katarakt')">Katarakt</span>
-            <span class="qopt" onclick="qsel(this,'q-sikayet','Glokom')">Glokom</span>
-            <span class="qopt" onclick="qsel(this,'q-sikayet','Şaşılık')">Şaşılık</span>
-            <span class="qopt" onclick="qsel(this,'q-sikayet','Kornea')">Kornea</span>
-            <span class="qopt" onclick="qsel(this,'q-sikayet','Retina')">Retina</span>
-          </div>
-        </div>
-        <div class="qblock">
-          <div class="qlabel"><span class="qnum">3</span>Gün tercihiniz var mı?</div>
-          <div class="qopts" id="q-gun-tip">
-            <span class="qopt" onclick="qsel(this,'q-gun-tip','Esnek');toggleGunSec(false)">Esnekım, fark etmez</span>
-            <span class="qopt" onclick="qsel(this,'q-gun-tip','Belirli');toggleGunSec(true)">Belirli bir günüm var</span>
-          </div>
-          <div id="gun-sec-wrap" style="display:none;margin-top:8px;">
-            <div class="qopts" id="q-gun">
-              <span class="qopt" onclick="qselMulti(this,'q-gun','Pzt')">Pzt</span>
-              <span class="qopt" onclick="qselMulti(this,'q-gun','Sal')">Sal</span>
-              <span class="qopt" onclick="qselMulti(this,'q-gun','Çar')">Çar</span>
-              <span class="qopt" onclick="qselMulti(this,'q-gun','Per')">Per</span>
-              <span class="qopt" onclick="qselMulti(this,'q-gun','Cum')">Cum</span>
-              <span class="qopt" onclick="qselMulti(this,'q-gun','Cmt')">Cmt</span>
-              <span class="qopt" onclick="qselMulti(this,'q-gun','Paz')">Paz</span>
-            </div>
-          </div>
-        </div>
-        <div class="qblock">
-          <div class="qlabel"><span class="qnum">4</span>Ne zamandır bu şikayetiniz var?</div>
-          <div class="qopts" id="q-sure">
-            <span class="qopt" onclick="qsel(this,'q-sure','1 aydan az')">1 aydan az</span>
-            <span class="qopt" onclick="qsel(this,'q-sure','1–6 ay')">1–6 ay</span>
-            <span class="qopt" onclick="qsel(this,'q-sure','6 ay+')">6 ay+</span>
-          </div>
-        </div>
-        <div class="qblock">
-          <div class="qlabel"><span class="qnum">5</span>Görme kaybı yaşıyor musunuz?</div>
-          <div class="qopts" id="q-gorme">
-            <span class="qopt" onclick="qsel(this,'q-gorme','Evet, ciddi')">Evet, ciddi</span>
-            <span class="qopt" onclick="qsel(this,'q-gorme','Kısmen azaldı')">Kısmen azaldı</span>
-            <span class="qopt" onclick="qsel(this,'q-gorme','Hayır')">Hayır</span>
-          </div>
-        </div>
-        <div class="qblock">
-          <div class="qlabel"><span class="qnum">6</span>Yaş grubu</div>
-          <div class="qopts" id="q-yas">
-            <span class="qopt" onclick="qsel(this,'q-yas','0–18')">0–18</span>
-            <span class="qopt" onclick="qsel(this,'q-yas','19–45')">19–45</span>
-            <span class="qopt" onclick="qsel(this,'q-yas','46–65')">46–65</span>
-            <span class="qopt" onclick="qsel(this,'q-yas','65+')">65+</span>
-          </div>
-        </div>
-        <div class="qblock">
-          <div class="qlabel"><span class="qnum">7</span>Daha önce göz ameliyatı geçirdi mi?</div>
-          <div class="qopts" id="q-amel">
-            <span class="qopt" onclick="qsel(this,'q-amel','Evet')">Evet</span>
-            <span class="qopt" onclick="qsel(this,'q-amel','Hayır')">Hayır</span>
-          </div>
-        </div>
-        <div class="qblock">
-          <div class="qlabel"><span class="qnum">8</span>Doktor unvan tercihi var mı?</div>
-          <div class="qopts" id="q-unvan">
-            <span class="qopt" onclick="qsel(this,'q-unvan','Fark etmez')">Fark etmez</span>
-            <span class="qopt" onclick="qsel(this,'q-unvan','Profesör')">Profesör</span>
-            <span class="qopt" onclick="qsel(this,'q-unvan','Doçent')">Doçent</span>
-            <span class="qopt" onclick="qsel(this,'q-unvan','Operatör Dr.')">Operatör Dr.</span>
-          </div>
-        </div>
-        <button class="bor bfull" id="btn-ai" onclick="doAI()">🤖 Doktor Önerisi Al</button>
-        <button class="bsec bfull" style="margin-top:7px;" onclick="resetAll()">↺ Formu Sıfırla</button>
-      </div>
-    </div>
-
-    <div id="right-col">
-      <div class="card">
-        <div class="ctitle">Öneri & Sıralama</div>
-        <div id="ai-area"><div class="ph"><div class="ico">🏥</div><div>Formu doldurun, doktor önerisi alın</div></div></div>
-      </div>
-      <div class="card" id="cal-card" style="display:none;">
-        <div class="ctitle" id="cal-title">Randevu Takvimi — Nisan 2026</div>
-        <div style="border:1px solid var(--bd);border-radius:var(--rad);overflow:hidden;">
-          <div class="cal-head">
-            <div>
-              <h3 id="cal-dr-name">—</h3>
-              <div class="sub" id="cal-dr-sub"></div>
-            </div>
-            <div style="font-size:11px;opacity:.7;">Nisan 2026</div>
-          </div>
-          <div class="cal-grid" id="cal-grid"></div>
-        </div>
-        <div id="slots-area" style="display:none;">
-          <div class="slots-wrap">
-            <div class="slots-hd">
-              <span id="slots-date-lbl">Saat Seçin</span>
-              <span style="font-size:10px;color:var(--tm);">🔴 Dolu &nbsp;🟢 Müsait</span>
-            </div>
-            <div class="slots-grid" id="slots-grid"></div>
-          </div>
-        </div>
-      </div>
-      <div id="confirm-area"></div>
-    </div>
-  </div>
-
-<div style="margin-top:24px;padding:14px 0;border-top:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
-  <div style="font-size:11px;color:var(--tl);font-style:italic;">
-    © 2026 Tüm hakları <strong style="color:var(--tm);">Volkan EREN</strong>'e aittir. Bu sistem fikri mülkiyettir, izinsiz kullanılamaz.
-  </div>
-  <div style="font-size:11px;color:var(--tl);">
-    İletişim: <a href="mailto:volkaneren34@hotmail.com" style="color:var(--or);text-decoration:none;font-weight:600;">volkaneren34@hotmail.com</a>
-  </div>
-</div>
-  </div>
-
-<!-- ===== DASHBOARD ===== -->
-<div id="tab-dashboard" class="panel">
-  <div style="background:#FEF9C3;border:1px solid #FDE047;border-radius:8px;padding:10px 16px;margin-bottom:18px;display:flex;align-items:center;gap:10px;">
-  <span style="font-size:16px;">⚠️</span>
-  <div>
-    <span style="font-size:12px;font-weight:700;color:#854D0E;">DEMO ÇALIŞMASI</span>
-    <span style="font-size:12px;color:#92400E;margin-left:8px;">Bu sistem Dünyagöz Hastanesi için geliştirilmiş bir demo çalışmasıdır. Gerçek hasta verisi içermez.</span>
-  </div>
-</div>
-
-  <!-- Genel Görünüm -->
-  <div class="dsect">
-    <div class="dash-top">
-      <div class="dsect-title">📊 Genel Bakış <span class="badge" id="per-lbl-genel">Günlük</span></div>
-      <div class="per-tabs">
-        <button class="prbtn act" onclick="dPer('gun',this)">Günlük</button>
-        <button class="prbtn" onclick="dPer('haf',this)">Haftalık</button>
-        <button class="prbtn" onclick="dPer('ayl',this)">Aylık</button>
-      </div>
-    </div>
-    <div class="kpi4">
-      <div class="kpi"><div class="kpil">Toplam Randevu</div><div class="kpiv" id="kv-tot">—</div><div class="kbdg bup" id="kb-tot"></div></div>
-      <div class="kpi"><div class="kpil">Ort. Doluluk</div><div class="kpiv" id="kv-dol">—</div><div class="kbdg" id="kb-dol"></div></div>
-      <div class="kpi"><div class="kpil">Toplam Ciro</div><div class="kpiv" id="kv-cir">—</div><div class="kbdg bup">▲ %9</div></div>
-      <div class="kpi"><div class="kpil">İptal Oranı</div><div class="kpiv" id="kv-ipt">—</div><div class="kbdg bdn">▼ geçen dönem</div></div>
-    </div>
-    <div class="lay2">
-      <div class="card"><div class="ctitle">Hastane Bazlı Doluluk</div><div id="hosp-bars"></div></div>
-      <div class="card"><div class="ctitle">Randevu Trendi</div><div class="bcht" id="trend-chart"></div></div>
-    </div>
-  </div>
-
-  <!-- Hastane Bazlı -->
-  <div class="dsect">
-    <div class="dash-top">
-      <div class="dsect-title">🏥 Hastane Bazlı Analiz <span class="badge" id="per-lbl-hosp">Günlük</span></div>
-      <div class="per-tabs">
-        <button class="prbtn act" onclick="hPer('gun',this)">Günlük</button>
-        <button class="prbtn" onclick="hPer('haf',this)">Haftalık</button>
-        <button class="prbtn" onclick="hPer('ayl',this)">Aylık</button>
-      </div>
-    </div>
-    <div class="lay3" id="hosp-detail-cards"></div>
-  </div>
-
-  <!-- Doktor Bazlı -->
-  <div class="dsect">
-    <div class="dash-top">
-      <div class="dsect-title">👨‍⚕️ Doktor Bazlı Analiz <span class="badge" id="per-lbl-dr">Günlük</span></div>
-      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-        <div class="hosp-filter" id="hosp-filter">
-          <button class="hfbtn sel" onclick="toggleHosp(this,'İstanbul-Etiler')">Etiler</button>
-          <button class="hfbtn sel" onclick="toggleHosp(this,'İstanbul-Ataköy')">Ataköy</button>
-          <button class="hfbtn sel" onclick="toggleHosp(this,'Ankara')">Ankara</button>
-        </div>
-        <div class="per-tabs">
-          <button class="prbtn act" onclick="drPer('gun',this)">Günlük</button>
-          <button class="prbtn" onclick="drPer('haf',this)">Haftalık</button>
-          <button class="prbtn" onclick="drPer('ayl',this)">Aylık</button>
-        </div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="ctitle">Doktor Karşılaştırma Tablosu</div>
-      <div id="dr-cmp-table"></div>
-    </div>
-    <div class="lay3" id="dr-detail-cards" style="margin-top:16px;"></div>
-  </div>
-
-  <!-- Doktor Seçim Kriterleri Bilgi Kutusu -->
-  <div class="dsect">
-    <div class="dsect-title">📋 Doktor Seçim Kriterleri <span class="badge">Sistem Bilgisi</span></div>
-    <div class="card">
-      <div style="font-size:12px;color:var(--tm);margin-bottom:14px;font-style:italic;">
-        Aşağıdaki kriterler, randevu asistanının doktor sıralamasını belirlemek için kullandığı öncelik sırasıdır. Bu bilgi yalnızca yönetim ve temsilci bilgilendirmesi amaçlıdır.
-      </div>
-      <div style="display:flex;flex-direction:column;gap:10px;">
-
-        <div style="display:flex;align-items:flex-start;gap:14px;padding:14px 16px;background:#F0F4FF;border:1px solid #C8D4F0;border-radius:9px;">
-          <div style="min-width:28px;height:28px;background:var(--pr);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;">1</div>
-          <div>
-            <div style="font-size:13px;font-weight:700;color:var(--pr);margin-bottom:3px;">Gün Uyumu <span style="font-size:10px;font-weight:600;background:var(--res);color:var(--re);padding:1px 7px;border-radius:10px;margin-left:6px;">ELEMELİ</span></div>
-            <div style="font-size:12px;color:var(--tm);line-height:1.6;">Hasta tercih ettiği günde çalışmayan doktor listeden <strong>tamamen çıkarılır.</strong> Gün uyumu sağlanamıyorsa sistem o doktoru hiç önermez.</div>
-          </div>
-        </div>
-
-        <div style="display:flex;align-items:flex-start;gap:14px;padding:14px 16px;background:#E6F4ED;border:1px solid #A7D9BC;border-radius:9px;">
-          <div style="min-width:28px;height:28px;background:var(--gr);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;">2</div>
-          <div>
-            <div style="font-size:13px;font-weight:700;color:var(--gr);margin-bottom:3px;">Doluluk Dengesi <span style="font-size:10px;font-weight:600;background:var(--grs);color:var(--gr);padding:1px 7px;border-radius:10px;margin-left:6px;">ANA KRİTER × 2</span></div>
-            <div style="font-size:12px;color:var(--tm);line-height:1.6;">En az dolu doktor önce sıralanır. Formül: <code style="background:#fff;padding:1px 6px;border-radius:4px;font-size:11px;">(100 − doluluk%) × 2</code> puan. Hiçbir doktorun "randevu alamıyorum" dememesi için her doktora sırayla dağıtım hedeflenir.</div>
-          </div>
-        </div>
-
-        <div style="display:flex;align-items:flex-start;gap:14px;padding:14px 16px;background:var(--was);border:1px solid #F5D190;border-radius:9px;">
-          <div style="min-width:28px;height:28px;background:var(--wa);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;">3</div>
-          <div>
-            <div style="font-size:13px;font-weight:700;color:var(--wa);margin-bottom:3px;">Aylık Ciro <span style="font-size:10px;font-weight:600;background:#FDE68A;color:var(--wa);padding:1px 7px;border-radius:10px;margin-left:6px;">GİZLİ — MT GÖRMEZ</span></div>
-            <div style="font-size:12px;color:var(--tm);line-height:1.6;">Eşit dolulukta yüksek cirolu doktor önce sıralanır. Formül: <code style="background:#fff;padding:1px 6px;border-radius:4px;font-size:11px;">(ciro / 15.000) × 50</code> puan. Bu bilgi müşteri temsilcisine <strong>gösterilmez,</strong> yalnızca arka planda hesaplanır.</div>
-          </div>
-        </div>
-
-        <div style="display:flex;align-items:flex-start;gap:14px;padding:14px 16px;background:#EDE9FF;border:1px solid #C4B5FD;border-radius:9px;">
-          <div style="min-width:28px;height:28px;background:#6B21A8;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;">4</div>
-          <div>
-            <div style="font-size:13px;font-weight:700;color:#6B21A8;margin-bottom:3px;">Unvan Tercihi <span style="font-size:10px;font-weight:600;background:#EDE9FF;color:#6B21A8;padding:1px 7px;border-radius:10px;margin-left:6px;">BONUS +30</span></div>
-            <div style="font-size:12px;color:var(--tm);line-height:1.6;">Hasta Prof / Doçent / Operatör Dr. tercih ettiyse eşleşen doktora +30 puan bonus verilir. Tercih "Fark etmez" ise bu kriter devreye girmez.</div>
-          </div>
-        </div>
-
-        <div style="display:flex;align-items:flex-start;gap:14px;padding:14px 16px;background:#F8F9FC;border:1px solid var(--bd);border-radius:9px;">
-          <div style="min-width:28px;height:28px;background:var(--tl);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;">5</div>
-          <div>
-            <div style="font-size:13px;font-weight:700;color:var(--tm);margin-bottom:3px;">Uzmanlık Alanı Uyumu <span style="font-size:10px;font-weight:600;background:var(--bg);color:var(--tm);padding:1px 7px;border-radius:10px;margin-left:6px;">FİLTRE</span></div>
-            <div style="font-size:12px;color:var(--tm);line-height:1.6;">Hastanın şikayetiyle (Katarakt, Glokom, Kornea vb.) doğrudan uzmanlık alanı eşleşen doktorlar öncelikle listelenir. Uzmanlık yoksa "Genel Göz" uzmanları da dahil edilir.</div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-<div style="margin-top:24px;padding:14px 0;border-top:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
-  <div style="font-size:11px;color:var(--tl);font-style:italic;">
-    © 2026 Tüm hakları <strong style="color:var(--tm);">Volkan EREN</strong>'e aittir. Bu sistem fikri mülkiyettir, izinsiz kullanılamaz.
-  </div>
-  <div style="font-size:11px;color:var(--tl);">
-    İletişim: <a href="mailto:volkaneren34@hotmail.com" style="color:var(--or);text-decoration:none;font-weight:600;">volkaneren34@hotmail.com</a>
-  </div>
-</div>
-</div>
-
-<!-- ===== ERLANG ===== -->
-<div id="tab-erlang" class="panel" style="--epr:#1A2E4A;--epr2:#185FA5;--eprs:#EBF3FC;--epbr:#B5D4F4;">
-  <div style="background:#1A2E4A;border-radius:var(--rad);padding:14px 20px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
-  <div style="font-size:12px;color:rgba(255,255,255,0.7);font-style:italic;">
-    © 2026 Tüm hakları <strong style="color:#fff;">Volkan EREN</strong>'e aittir. Bu sistem fikri mülkiyettir, izinsiz kullanılamaz.
-  </div>
-  <div style="font-size:12px;color:rgba(255,255,255,0.7);">
-    İletişim: <a href="mailto:volkaneren34@hotmail.com" style="color:#7EA8D4;text-decoration:none;font-weight:600;">volkaneren34@hotmail.com</a>
-  </div>
-</div>
-
-  <style>
-#tab-erlang .ctitle::before{background:#185FA5!important;}
-#tab-erlang .ctitle{color:#1A2E4A!important;}
-#tab-erlang .bor{background:#1A2E4A!important;}
-#tab-erlang .bor:hover{background:#185FA5!important;}
-#tab-erlang .finput:focus{border-color:#185FA5!important;}
-#tab-erlang .fsel:focus{border-color:#185FA5!important;}
-#tab-erlang .eres-hero{background:linear-gradient(135deg,#1A2E4A,#185FA5)!important;}
-#tab-erlang .einfo{background:#EBF3FC!important;border-color:#B5D4F4!important;color:#0C447C!important;}
-#tab-erlang .esn{background:#185FA5!important;}
-#tab-erlang .emb .v{color:#1A2E4A!important;}
-.etbl tr.opt td{background:#EBF3FC!important;}
-</style>
-<div class="elay">
+    <!-- SOL: FORM -->
     <div>
       <div class="card">
         <div class="ctitle">Parametre Girişi</div>
-        <div class="fgrp"><label class="flabel">Ölçüm Periyodu</label>
-          <select class="fsel" id="e-per"><option value="15">15 dakika</option><option value="30" selected>30 dakika</option><option value="60">60 dakika</option></select></div>
-        <div class="fgrp"><label class="flabel">Bu Periyottaki Çağrı Sayısı</label><input type="number" id="e-calls" class="finput" value="120" min="1"></div>
-        <div class="fgrp"><label class="flabel">AHT — Average Handle Time (sn)</label><input type="number" id="e-aht" class="finput" value="180" min="1"></div>
-        <div class="fgrp"><label class="flabel">Hold Time (sn)</label><input type="number" id="e-hold" class="finput" value="30" min="0"></div>
-        <div class="fgrp"><label class="flabel">ACW — After Call Work (sn)</label><input type="number" id="e-acw" class="finput" value="30" min="0"></div>
-        <div class="fgrp"><label class="flabel">Shrinkage / Kayıp Oranı (%)</label><input type="number" id="e-shrink" class="finput" value="25" min="0" max="60"></div>
-        <div class="fgrp"><label class="flabel">Hedef Hizmet Seviyesi (%)</label><input type="number" id="e-sl" class="finput" value="80" min="50" max="99"></div>
-        <div class="fgrp"><label class="flabel">Hedef Cevaplama Süresi (sn)</label><input type="number" id="e-tgt" class="finput" value="20" min="1"></div>
-        <button style="background:#1A2E4A;color:#fff;border:none;padding:10px 22px;border-radius:7px;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;width:100%;transition:opacity .2s;" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'" onclick="calcE()">🔢 Hesapla</button>
+
+        <div class="fgrp">
+          <label class="flabel">Ölçüm Periyodu</label>
+          <select class="fsel" id="e-per">
+            <option value="15">15 dakika</option>
+            <option value="30" selected>30 dakika</option>
+            <option value="60">60 dakika</option>
+          </select>
+        </div>
+        <div class="fgrp">
+          <label class="flabel">Bu Periyottaki Çağrı Sayısı</label>
+          <input type="number" id="e-calls" class="finput" value="120" min="1">
+        </div>
+        <div class="fgrp">
+          <label class="flabel">Average Handle Time — AHT <span class="tip">(saniye)</span></label>
+          <input type="number" id="e-aht" class="finput" value="180" min="1">
+        </div>
+        <div class="fgrp">
+          <label class="flabel">Hold Time <span class="tip">(saniye)</span></label>
+          <input type="number" id="e-hold" class="finput" value="30" min="0">
+        </div>
+        <div class="fgrp">
+          <label class="flabel">ACW — After Call Work <span class="tip">(saniye)</span></label>
+          <input type="number" id="e-acw" class="finput" value="30" min="0">
+        </div>
+        <div class="fgrp">
+          <label class="flabel">Shrinkage / Kayıp Oranı <span class="tip">(%)</span></label>
+          <input type="number" id="e-shrink" class="finput" value="25" min="0" max="60">
+        </div>
+        <div class="fgrp">
+          <label class="flabel">Hedef Hizmet Seviyesi <span class="tip">(%)</span></label>
+          <input type="number" id="e-sl" class="finput" value="80" min="50" max="99">
+        </div>
+        <div class="fgrp">
+          <label class="flabel">Hedef Cevaplama Süresi <span class="tip">(saniye)</span></label>
+          <input type="number" id="e-tgt" class="finput" value="20" min="1">
+        </div>
+
+        <button class="btn" onclick="handleCalc()">🔢 Hesapla</button>
       </div>
+
+      <!-- Nasıl Çalışır -->
       <div class="card">
         <div class="ctitle">Nasıl Çalışır?</div>
         <div style="font-size:12px;color:var(--tm);line-height:1.7;">
-          <div class="estep"><div class="esn">1</div><div><strong>Çağrı yükü (A) hesaplanır.</strong> Saatlik çağrı × AHT ÷ 3600 = Trafik Yoğunluğu (A). Kaç agent'ın sürekli meşgul kalacağını gösterir.</div></div>
-          <div class="estep"><div class="esn">2</div><div><strong>Matematiksel formül uygulanır.</strong> Rastgele çağrıları ve bekleme sırasını modelleyen matematiksel formüldür.</div></div>
-          <div class="estep"><div class="esn">3</div><div><strong>Shrinkage eklenir.</strong> Mola, toplantı, eğitim kayıpları dahil edilir. Saf ihtiyaç ÷ (1−Shrinkage%) = Nihai.</div></div>
-          <div class="estep"><div class="esn">4</div><div><strong>Hizmet seviyesi doğrulanır.</strong> Farklı agent sayıları için tablo gösterilir.</div></div>
-          <div style="margin-top:10px;padding:10px 12px;background:var(--ors);border-radius:7px;font-size:11px;color:#7A2C00;"><strong>⚠️ Not:</strong> kapasite hesaplama kimsenin kapamadığını varsayar. Gerçekte abandon rate de dikkate alınmalıdır.</div>
+          <div class="step"><div class="step-n">1</div><div class="step-txt"><strong>Çağrı yükü hesaplanır.</strong> Saatlik çağrı × AHT ÷ 3600 = Trafik yoğunluğu (A). Kaç agent'ın sürekli meşgul kalacağını gösterir.</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-txt"><strong>Matematiksel formül uygulanır.</strong> Rastgele gelen çağrıları ve bekleme sırasını modelleyen formüldür. Hedef hizmet seviyesine göre minimum agent sayısı bulunur.</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-txt"><strong>Shrinkage eklenir.</strong> Mola, toplantı, eğitim gibi kayıplar hesaba katılır. Saf ihtiyaç ÷ (1 − Shrinkage%) = Nihai agent sayısı.</div></div>
+          <div class="step"><div class="step-n">4</div><div class="step-txt"><strong>Hizmet seviyesi doğrulanır.</strong> Farklı agent sayıları için elde edilecek oranlar tabloda gösterilir.</div></div>
+          <div style="margin-top:10px;padding:10px 12px;background:var(--pr3);border-radius:7px;font-size:11px;color:#0C447C;">
+            <strong>⚠️ Not:</strong> Formül kimsenin hattı kapatmadığını varsayar. Gerçek ortamlarda terk oranı da dikkate alınmalıdır.
+          </div>
         </div>
       </div>
     </div>
-    <div>
-      <div class="card"><div class="ctitle">Hesaplama Sonucu</div><div id="e-out"><div class="ph"><div class="ico">🔢</div><div>Parametreleri girin ve hesapla butonuna basın</div></div></div></div>
-      <div class="card" id="e-detail" style="display:none;"><div class="ctitle">Detaylı Analiz</div><div class="emg" id="e-metrics"></div><div class="einfo" id="e-yorum"></div></div>
-      <div class="card" id="e-tbl-card" style="display:none;"><div class="ctitle">Hizmet Seviyesi Tablosu</div><p style="font-size:11px;color:var(--tm);margin-bottom:10px;">Farklı agent sayılarında elde edilecek hizmet seviyeleri:</p><div id="e-tbl"></div></div>
-    </div>
-  </div>
-</div>
 
+    <!-- SAĞ: SONUÇ -->
+    <div id="result-col">
+      <div class="card">
+        <div class="ctitle">Hesaplama Sonucu</div>
+        <div class="ph"><div class="ico">🔢</div><div>Parametreleri girin ve hesapla butonuna basın</div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <div class="footer-l">© 2026 Tüm hakları <strong>Volkan EREN</strong>'e aittir. Bu araç fikri mülkiyettir.</div>
+    <div class="footer-r">İletişim: <a href="mailto:volkaneren34@hotmail.com">volkaneren34@hotmail.com</a></div>
+  </div>
 </main>
 
 <script>
-// ==================== VERİ ====================
-// Ciro SADECE algoritma için — MT'ye gösterilmez
-const HOSP = {
-  'İstanbul-Etiler': {
-    color: '#E8470A',
-    doctors: [
-      {id:'e1', name:'Prof. Dr. Anıl Kubaloğlu', unvan:'Prof',
-       uzmanlik:['Katarakt','Şaşılık','Kornea'], spec:'Katarakt / Şaşılık / Kornea',
-       gunler:['Pzt','Sal','Çar','Per','Cum'], ciro:15000, muayene:5000,
-       calismaTur:'Hafta içi 09:00–18:00', doluluk:82},
-      {id:'e2', name:'Doç. Dr. Çağrı İlhan', unvan:'Doç',
-       uzmanlik:['Genel Göz','Glokom','Şaşılık','Kornea'], spec:'Genel Göz / Glokom / Şaşılık / Kornea',
-       gunler:['Pzt','Sal','Çar','Per','Cum','Cmt'], ciro:10000, muayene:3000,
-       calismaTur:'Hafta içi + Cumartesi 09:00–18:00', doluluk:74},
-      {id:'e3', name:'Op. Dr. Adnan Polat', unvan:'Op',
-       uzmanlik:['Genel Göz','Katarakt','Glokom','Şaşılık'], spec:'Genel Göz / Katarakt / Glokom / Şaşılık',
-       gunler:['Pzt','Sal','Çar','Per','Cum','Cmt'], ciro:7000, muayene:2000,
-       calismaTur:'Hafta içi + Cumartesi 09:00–18:00', doluluk:63},
-      {id:'e4', name:'Op. Dr. Ali Veli', unvan:'Op',
-       uzmanlik:['Genel Göz','Katarakt','Glokom','Şaşılık'], spec:'Genel Göz / Katarakt / Glokom / Şaşılık',
-       gunler:['Pzt','Sal','Çar','Per','Cum','Paz'], ciro:6000, muayene:2000,
-       calismaTur:'Hafta içi + Pazar 09:00–18:00', doluluk:58},
-    ]
-  },
-  'İstanbul-Ataköy': {
-    color: '#1A4A8A',
-    doctors: [
-      {id:'a1', name:'Prof. Dr. Bozkurt Şener', unvan:'Prof',
-       uzmanlik:['Katarakt','Glokom','Şaşılık','Kornea'], spec:'Katarakt / Glokom / Şaşılık / Kornea',
-       gunler:['Pzt','Sal','Çar','Per','Cum'], ciro:12500, muayene:5000,
-       calismaTur:'Hafta içi 09:00–18:00', doluluk:88},
-      {id:'a2', name:'Doç. Dr. Burak Erden', unvan:'Doç',
-       uzmanlik:['Genel Göz','Glokom','Şaşılık','Kornea'], spec:'Genel Göz / Glokom / Şaşılık / Kornea',
-       gunler:['Pzt','Sal','Çar','Per','Cum','Cmt'], ciro:11000, muayene:3000,
-       calismaTur:'Hafta içi + Cumartesi 09:00–18:00', doluluk:79},
-      {id:'a3', name:'Op. Dr. Burcu Yelmi', unvan:'Op',
-       uzmanlik:['Genel Göz','Katarakt','Glokom','Şaşılık'], spec:'Genel Göz / Katarakt / Glokom / Şaşılık',
-       gunler:['Pzt','Sal','Çar','Per','Cum','Cmt'], ciro:6000, muayene:2000,
-       calismaTur:'Hafta içi + Cumartesi 09:00–18:00', doluluk:71},
-      {id:'a4', name:'Op. Dr. Mehmet Akın', unvan:'Op',
-       uzmanlik:['Genel Göz','Katarakt','Glokom','Şaşılık'], spec:'Genel Göz / Katarakt / Glokom / Şaşılık',
-       gunler:['Pzt','Sal','Çar','Per','Cum','Paz'], ciro:5000, muayene:2000,
-       calismaTur:'Hafta içi + Pazar 09:00–18:00', doluluk:65},
-    ]
-  },
-  'Ankara': {
-    color: '#2D7A4A',
-    doctors: [
-      {id:'k1', name:'Op. Dr. Bayram Yapıcı', unvan:'Op',
-       uzmanlik:['Genel Göz','Katarakt','Glokom','Kornea'], spec:'Genel Göz / Katarakt / Glokom / Kornea',
-       gunler:['Pzt','Sal','Çar','Per','Cum','Cmt'], ciro:8000, muayene:3000,
-       calismaTur:'Hafta içi + Cumartesi 09:00–18:00', doluluk:76},
-      {id:'k2', name:'Op. Dr. Bülent Ayan', unvan:'Op',
-       uzmanlik:['Genel Göz','Katarakt','Glokom','Şaşılık'], spec:'Genel Göz / Katarakt / Glokom / Şaşılık',
-       gunler:['Pzt','Sal','Çar','Per','Cum','Paz'], ciro:4000, muayene:2000,
-       calismaTur:'Hafta içi + Pazar 09:00–18:00', doluluk:65},
-    ]
+const SUPABASE_URL = 'https://scuehzsfrzcxwuqtsnix.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_rgwceGzTGxaTRbGAsTMi7Q_ur-ppJ6J';
+
+let emailVerildi = false;
+let sonucVerisi = null;
+
+// ===== HESAPLAMA =====
+function erlangC(A, N) {
+  if (N <= A) return 1;
+  let inv = 1;
+  for (let i = 1; i <= N; i++) inv = 1 + inv * i / A;
+  inv = 1 / inv;
+  return inv / (inv + (1 - A / N) * (1 - inv) / (A / N));
+}
+
+function SL(A, N, t, T) {
+  if (N <= A) return 0;
+  return 1 - erlangC(A, N) * Math.exp(-(N - A) * t / T);
+}
+
+function hesapla() {
+  const per = parseInt(document.getElementById('e-per').value);
+  const calls = parseInt(document.getElementById('e-calls').value);
+  const aht = parseInt(document.getElementById('e-aht').value);
+  const acw = parseInt(document.getElementById('e-acw').value);
+  const shrink = parseInt(document.getElementById('e-shrink').value) / 100;
+  const slGoal = parseInt(document.getElementById('e-sl').value) / 100;
+  const tGoal = parseInt(document.getElementById('e-tgt').value);
+
+  if (!calls || !aht || calls < 1 || aht < 1) return null;
+
+  const T = aht + acw;
+  const cph = calls * (60 / per);
+  const A = (cph * T) / 3600;
+
+  let N = Math.max(Math.ceil(A) + 1, 1);
+  let sl = 0;
+  while (N < 500) { sl = SL(A, N, tGoal, T); if (sl >= slGoal) break; N++; }
+
+  const raw = N;
+  const final = Math.ceil(raw / (1 - shrink));
+  const util = Math.round((A / raw) * 100);
+  const ec = erlangC(A, raw);
+  const avgW = raw > A ? Math.round((ec * T) / (raw - A)) : 999;
+
+  // Tablo verileri
+  const tablo = [];
+  for (let n = Math.max(Math.ceil(A) + 1, raw - 2); n <= raw + 5; n++) {
+    const slN = SL(A, n, tGoal, T);
+    const ecN = erlangC(A, n);
+    const wN = n > A ? Math.round((ecN * T) / (n - A)) : '—';
+    const uN = Math.round((A / n) * 100);
+    tablo.push({ n, slN, wN, uN, opt: n === raw });
   }
-};
 
-// Tüm doktorların flat listesi (dashboard için)
-function allDoctors() {
-  const out = [];
-  Object.entries(HOSP).forEach(([hname, h]) => {
-    h.doctors.forEach(d => out.push({...d, hastane: hname, hcolor: h.color}));
-  });
-  return out;
+  return { final, raw, shrink, T, cph, A, sl, util, avgW, tablo, slGoal };
 }
 
-// ==================== SIRALAMA ALGORİTMASI ====================
-// Kural: önce doluluk dengesi (az dolana git), eşitse ciro yüksek
-// Unvan tercihi: bonus puan olarak eklenir
-function scoreDoctor(dr, unvanTercihi, tercihGunler) {
-  // 1. Doluluk dengesi: az dolu önce (ağırlık 2x)
-  let score = (100 - dr.doluluk) * 2;
-  // 2. Ciro: eşitlik bozucu — MT görmez (normalize max 15000)
-  score += (dr.ciro / 15000) * 50;
-  // 3. Unvan tercihi bonusu
-  if (unvanTercihi && unvanTercihi !== 'Fark etmez') {
-    const map = {'Profesör':'Prof','Doçent':'Doç','Operatör Dr.':'Op'};
-    if (dr.unvan === map[unvanTercihi]) score += 30;
-  }
-  // 4. Gün uyumu: tercih edilen günlerde çalışıyorsa +40, çalışmıyorsa -20
-  if (tercihGunler && tercihGunler.length > 0) {
-    const uyumlu = tercihGunler.some(g => dr.gunler.includes(g));
-    score += uyumlu ? 40 : -20;
-  }
-  return score;
-}
-
-function rankDoctors(doctors, sikayet, unvanTercihi, tercihGunler) {
-  return doctors
-    .filter(d => {
-      // Uzmanlık filtresi
-      if (sikayet && sikayet !== 'Retina') {
-        if (!d.uzmanlik.includes(sikayet) && !d.uzmanlik.includes('Genel Göz')) return false;
-      }
-      // Gün filtresi: tercih varsa, o günde çalışmayan tamamen elenir
-      if (tercihGunler && tercihGunler.length > 0) {
-        const uyumlu = tercihGunler.some(g => d.gunler.includes(g));
-        if (!uyumlu) return false;
-      }
-      return true;
-    })
-    .map(d => ({...d, score: scoreDoctor(d, unvanTercihi, [])}))
-    .sort((a,b) => b.score - a.score);
-}
-
-// ==================== TABS ====================
-function goTab(id, btn) {
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('act'));
-  document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('act'));
-  document.getElementById('tab-'+id).classList.add('act');
-  btn.classList.add('act');
-  if (id==='dashboard') { renderDash(curPerG); renderHospDash(curPerH); renderDrDash(curPerD); }
-}
-
-// ==================== RANDEVU ====================
-const picks = {};
-// Multi-select için: picks['q-gun'] = ['Pzt','Cmt'] gibi array
-const multiPicks = {};
-let curDoc = null, curDate = null, curSlot = null;
-let rankedDoctors = [];   // tam sıralanmış liste
-let curDrIndex = 0;       // şu an gösterilen doktor indexi
-let curAcil = '—';
-let curOzet = '';
-let curTnot = '';
-
-function qsel(el, gid, val) {
-  document.querySelectorAll('#'+gid+' .qopt').forEach(o=>o.classList.remove('sel'));
-  el.classList.add('sel');
-  picks[gid] = val;
-}
-
-function qselMulti(el, gid, val) {
-  el.classList.toggle('sel');
-  if(!multiPicks[gid]) multiPicks[gid] = [];
-  if(el.classList.contains('sel')) {
-    if(!multiPicks[gid].includes(val)) multiPicks[gid].push(val);
-  } else {
-    multiPicks[gid] = multiPicks[gid].filter(v=>v!==val);
-  }
-}
-
-function toggleGunSec(show) {
-  document.getElementById('gun-sec-wrap').style.display = show ? 'block' : 'none';
-  if(!show) {
-    multiPicks['q-gun'] = [];
-    document.querySelectorAll('#q-gun .qopt').forEach(o=>o.classList.remove('sel'));
-  }
-}
-
-function resetAll() {
-  Object.keys(picks).forEach(k=>delete picks[k]);
-  Object.keys(multiPicks).forEach(k=>delete multiPicks[k]);
-  document.querySelectorAll('.qopt').forEach(o=>o.classList.remove('sel'));
-  document.getElementById('hasta-ad').value='';
-  document.getElementById('gun-sec-wrap').style.display='none';
-  document.getElementById('ai-area').innerHTML='<div class="ph"><div class="ico">🏥</div><div>Formu doldurun, doktor önerisi alın</div></div>';
-  document.getElementById('cal-card').style.display='none';
-  document.getElementById('confirm-area').innerHTML='';
-  curDoc=null; curDate=null; curSlot=null;
-  rankedDoctors=[]; curDrIndex=0;
-}
-
-function unvanClass(u) {
-  if(u==='Prof') return 'dunvan-prof';
-  if(u==='Doç') return 'dunvan-doc';
-  return 'dunvan-op';
-}
-function unvanLabel(u) {
-  if(u==='Prof') return 'Profesör';
-  if(u==='Doç') return 'Doçent';
-  return 'Operatör Dr.';
-}
-function dolClass(p) {
-  if(p>=85) return 'pfX';
-  if(p>=75) return 'pfL';
-  if(p>=60) return 'pfM';
-  return 'pfH';
-}
-function dolColor(p) {
-  if(p>=85) return 'var(--re)';
-  if(p>=75) return 'var(--wa)';
-  return 'var(--gr)';
-}
-
-async function doAI() {
-  if (!picks['q-hastane'] || !picks['q-sikayet']) {
-    document.getElementById('ai-area').innerHTML='<div style="color:var(--re);padding:16px;font-size:13px;">⚠️ Lütfen <strong>hastane</strong> ve <strong>şikayet</strong> seçin.</div>';
+function handleCalc() {
+  const sonuc = hesapla();
+  if (!sonuc) {
+    alert('Lütfen geçerli değerler girin.');
     return;
   }
-  const btn = document.getElementById('btn-ai');
+  sonucVerisi = sonuc;
+
+  if (emailVerildi) {
+    // Aynı oturumda tekrar hesapladı — direkt göster
+    gosterSonuc(sonucVerisi);
+  } else {
+    // Email kapısını göster
+    gosterEmailGate();
+  }
+}
+
+function gosterEmailGate() {
+  document.getElementById('result-col').innerHTML = `
+    <div class="email-gate">
+      <div class="ico">📬</div>
+      <h3>Sonucunuz hazır!</h3>
+      <p>E-posta adresinizi girerek sonucu hemen görün.<br>Bu oturumda bir kez yeterli — bir daha sormayacağız.</p>
+      <div class="email-input-wrap">
+        <input type="email" class="email-input" id="gate-email" placeholder="ornek@sirket.com" onkeydown="if(event.key==='Enter')submitEmail()">
+        <button class="email-btn" id="gate-btn" onclick="submitEmail()">Sonucu Gör →</button>
+      </div>
+      <div class="email-note">Spam göndermiyoruz. Verileriniz güvende.</div>
+      <div class="email-err" id="gate-err"></div>
+    </div>
+  `;
+}
+
+async function submitEmail() {
+  const emailEl = document.getElementById('gate-email');
+  const btn = document.getElementById('gate-btn');
+  const errEl = document.getElementById('gate-err');
+  const email = emailEl.value.trim();
+
+  if (!email || !email.includes('@')) {
+    errEl.textContent = '⚠️ Lütfen geçerli bir e-posta adresi girin.';
+    return;
+  }
+
   btn.disabled = true;
-  document.getElementById('ai-area').innerHTML='<div class="ldg"><div class="spin"></div>Doktor önerisi hazırlanıyor…</div>';
-  document.getElementById('cal-card').style.display='none';
-  document.getElementById('confirm-area').innerHTML='';
+  btn.textContent = 'Kaydediliyor...';
+  errEl.textContent = '';
 
-  const h = picks['q-hastane'];
-  const sikayet = picks['q-sikayet'];
-  const unvan = picks['q-unvan'] || 'Fark etmez';
-  const tercihGunler = multiPicks['q-gun'] || [];
-
-  // Yerel algoritmayla sırala — ciro MT'ye gösterilmez
-  rankedDoctors = rankDoctors(HOSP[h].doctors, sikayet, unvan, tercihGunler);
-  curDrIndex = 0;
-
-  // AI'a sadece 1. doktor için yorum iste — ciro GİZLİ
-  const dr0 = rankedDoctors[0];
-  if (!dr0) {
-    document.getElementById('ai-area').innerHTML='<div style="color:var(--re);padding:16px;">Bu kriterlere uygun doktor bulunamadı.</div>';
-    btn.disabled = false;
-    return;
-  }
-
-  const prompt = buildAIPrompt(dr0, sikayet, '', null);
+  // Parametreleri JSON olarak hazırla
+  const params = {
+    periyot: document.getElementById('e-per').value,
+    cagri: document.getElementById('e-calls').value,
+    aht: document.getElementById('e-aht').value,
+    acw: document.getElementById('e-acw').value,
+    shrinkage: document.getElementById('e-shrink').value,
+    hizmet_seviyesi: document.getElementById('e-sl').value,
+    hedef_sure: document.getElementById('e-tgt').value
+  };
 
   try {
-    const resp = await fetch('/api/claude',{
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:400,messages:[{role:'user',content:prompt}]})
+    const resp = await fetch(`${SUPABASE_URL}/rest/v1/kapasite_leads`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({ email, parametreler: JSON.stringify(params) })
     });
-    const data = await resp.json();
-    const txt = data.content.map(c=>c.text||'').join('');
-    const res = JSON.parse(txt.replace(/```json|```/g,'').trim());
-    curAcil = res.aciliyet || 'Orta';
-    curOzet = res.ozet || '';
-    curTnot = res.temsilci_notu || '';
-    showDrCard(dr0, res.uygunluk, true);
-  } catch(e) {
-    curAcil = 'Orta'; curOzet = ''; curTnot = '';
-    showDrCard(dr0, '', true);
-  }
-  btn.disabled = false;
-}
 
-function buildAIPrompt(dr, sikayet, redSebep, extraCtx) {
-  return `Sen Dünyagöz Hastanesi randevu asistanısın.
-
-Hasta: Şikayet: ${sikayet}, Süre: ${picks['q-sure']||'—'}, Görme Kaybı: ${picks['q-gorme']||'—'}, Yaş: ${picks['q-yas']||'—'}${redSebep ? ', Önceki ret sebebi: '+redSebep : ''}
-
-Önerilen Doktor: ${dr.name} | Unvan: ${unvanLabel(dr.unvan)} | Uzmanlık: ${dr.uzmanlik.join(', ')} | Çalışma: ${dr.calismaTur} | Doluluk: %${dr.doluluk}
-
-${extraCtx||''}
-
-SADECE JSON döndür:
-{"aciliyet":"Yüksek|Orta|Düşük","ozet":"1 cümle hasta özeti","uygunluk":"Bu doktor neden uygun - 1 cümle","temsilci_notu":"MT için kısa not"}`;
-}
-
-function buildKriterNotu(dr, unvanTercihi, tercihGunler) {
-  const notlar = [];
-  // Doluluk
-  if (dr.doluluk < 65) notlar.push(`✅ Müsaitlik: %${dr.doluluk} doluluk oranıyla en boş doktorlardan biri`);
-  else if (dr.doluluk < 80) notlar.push(`📊 Müsaitlik: %${dr.doluluk} doluluk — makul kapasite`);
-  else notlar.push(`⚠️ Müsaitlik: %${dr.doluluk} doluluk — yoğun ancak uygun uzman`);
-  // Gün uyumu
-  if (tercihGunler && tercihGunler.length > 0) {
-    const uyumluGunler = tercihGunler.filter(g => dr.gunler.includes(g));
-    if (uyumluGunler.length > 0) notlar.push(`📅 Gün uyumu: ${uyumluGunler.join(', ')} günleri çalışıyor`);
-  }
-  // Unvan
-  if (unvanTercihi && unvanTercihi !== 'Fark etmez') {
-    const map = {'Profesör':'Prof','Doçent':'Doç','Operatör Dr.':'Op'};
-    if (dr.unvan === map[unvanTercihi]) notlar.push(`🎓 Unvan: Hasta "${unvanTercihi}" tercih etti — uyuşuyor`);
-    else notlar.push(`⚠️ Hasta "${unvanTercihi}" tercih etti ancak tercih edilen unvandan doktor seçilen gün/şubede müsait değil — en uygun alternatif önerildi`);
-  }
-  // Uzmanlık
-  const sikayet = picks['q-sikayet'] || '';
-  if (sikayet && dr.uzmanlik.includes(sikayet)) notlar.push(`🔬 Uzmanlık: "${sikayet}" doğrudan uzmanlık alanında`);
-  else if (sikayet) notlar.push(`🔬 Uzmanlık: Genel göz uzmanı, ${sikayet} vakalarına bakabilir`);
-  return notlar.join('<br>');
-}
-
-function showDrCard(dr, uygunluk, isFirst) {
-  const acilCls = curAcil==='Yüksek'?'acil-H':curAcil==='Orta'?'acil-O':'acil-L';
-  const tercihGunler = multiPicks['q-gun'] || [];
-  const gunUyumlu = tercihGunler.length === 0 || tercihGunler.some(g => dr.gunler.includes(g));
-  const toplamDr = rankedDoctors.length;
-
-  let html = '';
-  if (isFirst && curOzet) {
-    html += `<div style="margin-bottom:12px;">
-      <span class="acil ${acilCls}">ACİLİYET: ${curAcil}</span>
-      <p style="font-size:13px;font-style:italic;color:var(--tm);margin-top:6px;">${curOzet}</p>
-    </div>`;
-  }
-
-  html += `<div style="font-size:10px;font-weight:700;color:var(--tm);text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px;">
-    Önerilen Doktor — ${curDrIndex+1} / ${toplamDr}
-  </div>`;
-
-  // Gün uyumu uyarısı
-  if (tercihGunler.length > 0 && !gunUyumlu) {
-    html += `<div style="background:var(--was);border:1px solid #F5D190;border-radius:8px;padding:9px 13px;font-size:12px;color:var(--wa);margin-bottom:10px;">
-      ⚠️ Bu doktor tercih ettiğiniz günlerde çalışmıyor, ancak diğer günlerde müsait.
-    </div>`;
-  }
-
-  html += `<div class="dcard top">
-    <div class="drank">#${curDrIndex+1}</div>
-    <div class="dnm">${dr.name}</div>
-    <div><span class="dunvan ${unvanClass(dr.unvan)}">${unvanLabel(dr.unvan)}</span></div>
-    <div class="dsp" style="margin-top:4px;">${dr.spec}</div>
-    ${uygunluk ? `<div class="drs" style="margin-top:6px;">${uygunluk}</div>` : ''}
-    ${(()=>{
-      const ut = picks['q-unvan']||'';
-      if(!ut || ut==='Fark etmez') return '';
-      const umap = {'Profesör':'Prof','Doçent':'Doç','Operatör Dr.':'Op'};
-      if(dr.unvan === umap[ut]) return '';
-      const hospDrs = HOSP[picks['q-hastane']]?.doctors || [];
-      const gt = multiPicks['q-gun']||[];
-      const istenenDrlar = hospDrs.filter(d=>d.unvan===umap[ut]);
-      let neden = '';
-      if(istenenDrlar.length===0){
-        neden = ut+' unvanlı doktor bu şubede bulunmuyor.';
-      } else {
-        const gunUyumlu = istenenDrlar.filter(d=>gt.length===0||gt.some(g=>d.gunler.includes(g)));
-        if(gunUyumlu.length===0){
-          neden = ut+' unvanlı doktor seçilen günde çalışmıyor.';
-        } else {
-          neden = ut+' unvanlı doktor doluluk yoğunluğu nedeniyle sırada geride kaldı.';
-        }
-      }
-      return '<div style="background:#FEF9C3;border:1px solid #FDE047;border-radius:7px;padding:8px 12px;margin-top:8px;font-size:11px;color:#854D0E;display:flex;gap:7px;align-items:flex-start;"><span>⚠️</span><span><strong>Unvan uyarısı:</strong> '+neden+'</span></div>';
-    })()}
-    <div class="ddol" style="margin-top:8px;">
-      <div class="ddol-bar"><div class="ddol-fill ${dolClass(dr.doluluk)}" style="width:${dr.doluluk}%"></div></div>
-      <div class="ddol-lbl" style="color:${dolColor(dr.doluluk)}">%${dr.doluluk} dolu</div>
-    </div>
-    <div class='dmeta' style='margin-top:6px;'>
-      📅 ${dr.calismaTur} &nbsp;·&nbsp; Muayene: <strong>₺${dr.muayene.toLocaleString('tr-TR')}</strong>
-      <div class="prim-wrap" style="margin-top:5px;">
-        <span class="prim-ico">i</span>
-        <span class="prim-txt">Tahmini priminiz: ~₺${Math.round(dr.muayene * 0.05).toLocaleString('tr-TR')}</span>
-      </div>
-      <div class="prim-note">* Bu rakam bilgilendirme amaçlıdır, muayene gerçekleşmesi halinde geçerlidir. Lütfen hastanızı takip ediniz.</div>
-      <div class="mt-note">
-        <div class="mt-note-header">
-          <span class="mt-note-ico">i</span>
-          <span style="font-size:11px;font-weight:700;color:var(--pr2);">Neden bu doktor önerildi?</span>
-          <span class="mt-note-warn">— Bu bilgi yalnızca size özeldir, hastaya söylenmemelidir.</span>
-        </div>
-        <div class="mt-note-body">${buildKriterNotu(dr, picks['q-unvan']||'', multiPicks['q-gun']||[])}</div>
-      </div>
-    </div>
-    <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;">
-      <button class="btn-take" onclick='openCal(${JSON.stringify(dr).replace(/'/g,"&#39;")})'>📅 Randevu Al</button>
-      ${curDrIndex < toplamDr-1
-        ? `<button class="btn-baska" onclick="askRedSebep()">↩ Başka Doktor Öner</button>`
-        : `<div style="font-size:12px;color:var(--tm);padding:6px 0;">Bu hastane için tüm uygun doktorlar gösterildi.</div>`
-      }
-    </div>
-  </div>`;
-
-  if (curTnot) {
-    html += `<div class="tnote">📌 <strong>Temsilci Notu:</strong> ${curTnot}</div>`;
-  }
-
-  document.getElementById('ai-area').innerHTML = html;
-  document.getElementById('cal-card').style.display='none';
-  document.getElementById('confirm-area').innerHTML='';
-}
-
-function askRedSebep() {
-  const area = document.getElementById('ai-area');
-  const cur = area.innerHTML;
-  area.innerHTML += `
-    <div id="red-sebep-box" style="margin-top:12px;background:var(--bg);border:1.5px solid var(--bd);border-radius:9px;padding:14px 16px;">
-      <div style="font-size:11px;font-weight:700;color:var(--tm);text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px;">Hasta neden kabul etmedi?</div>
-      <div style="display:flex;flex-wrap:wrap;gap:6px;">
-        <button class="qopt" onclick="nextDoctor('Müsaitlik uyumsuzluğu')">📅 Müsaitlik uyumsuzluğu</button>
-        <button class="qopt" onclick="nextDoctor('Cinsiyet tercihi')">👤 Cinsiyet tercihi</button>
-        <button class="qopt" onclick="nextDoctor('Gün tercihi')">🗓 Gün tercihi</button>
-        <button class="qopt" onclick="nextDoctor('Ücret')">💰 Ücret</button>
-        <button class="qopt" onclick="nextDoctor('Diğer')">✦ Diğer</button>
-      </div>
-    </div>`;
-}
-
-async function nextDoctor(redSebep) {
-  curDrIndex++;
-  if (curDrIndex >= rankedDoctors.length) {
-    document.getElementById('ai-area').innerHTML = `
-      <div style="text-align:center;padding:28px 16px;color:var(--tm);">
-        <div style="font-size:32px;margin-bottom:10px;">🏥</div>
-        <div style="font-weight:700;color:var(--pr);margin-bottom:6px;">Tüm doktorlar gösterildi</div>
-        <div style="font-size:13px;">Bu hastane için başka öneri kalmadı.</div>
-        <button class="bor" style="margin-top:14px;" onclick="resetAll()">🔄 Yeni Arama</button>
-      </div>`;
-    return;
-  }
-
-  const dr = rankedDoctors[curDrIndex];
-  document.getElementById('ai-area').innerHTML = '<div class="ldg"><div class="spin"></div>Yeni doktor önerisi hazırlanıyor…</div>';
-
-  const prompt = buildAIPrompt(dr, picks['q-sikayet']||'', redSebep,
-    `Hasta önceki doktoru "${redSebep}" sebebiyle reddetti. Bu doktor bu konuda nasıl daha uygun?`);
-
-  try {
-    const resp = await fetch('/api/claude',{
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:400,messages:[{role:'user',content:prompt}]})
-    });
-    const data = await resp.json();
-    const txt = data.content.map(c=>c.text||'').join('');
-    const res = JSON.parse(txt.replace(/```json|```/g,'').trim());
-    curTnot = res.temsilci_notu || '';
-    showDrCard(dr, res.uygunluk, false);
-  } catch(e) {
-    curTnot = '';
-    showDrCard(dr, '', false);
-  }
-}
-
-// ==================== TAKVİM ====================
-const GUN_MAP = {0:'Paz',1:'Pzt',2:'Sal',3:'Çar',4:'Per',5:'Cum',6:'Cmt'};
-
-function seededRnd(seed) {
-  let s = seed;
-  return ()=>{ s=(s*9301+49297)%233280; return s/233280; };
-}
-
-function getSlotsDolu(drId, dateStr) {
-  const rnd = seededRnd(drId.charCodeAt(0)*100 + parseInt(dateStr.replace(/-/g,'')));
-  const slots=['09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00'];
-  const dolu = {};
-  slots.forEach(s=>{ if(rnd()<0.38) dolu[s]=true; });
-  return dolu;
-}
-
-function openCal(dr) {
-  curDoc = dr; curDate = null; curSlot = null;
-  document.getElementById('cal-card').style.display='block';
-  document.getElementById('cal-dr-name').textContent = dr.name;
-  document.getElementById('cal-dr-sub').textContent = dr.calismaTur;
-  document.getElementById('confirm-area').innerHTML='';
-  document.getElementById('slots-area').style.display='none';
-  buildCal(dr);
-  setTimeout(()=>document.getElementById('cal-card').scrollIntoView({behavior:'smooth',block:'start'}),100);
-}
-
-function buildCal(dr) {
-  const DOW = ['Pzt','Sal','Çar','Per','Cum','Cmt','Paz'];
-  let html = DOW.map(d=>`<div class="cal-dow">${d}</div>`).join('');
-
-  // Nisan 2026: 1 Nisan Çarşamba (JS: getDay()=3 → Mon-first offset=2)
-  const startOffset = 2;
-  const today = 24; // demo: bugün 24 Nisan
-
-  for(let i=0;i<startOffset;i++) html+=`<div class="cday empty"></div>`;
-
-  for(let d=1;d<=30;d++) {
-    const jsDay = new Date(2026,3,d).getDay();
-    const dayName = GUN_MAP[jsDay];
-    const isWorking = dr.gunler.includes(dayName);
-    const isPast = d < today;
-    const isToday = d === today;
-    const dateStr = `2026-04-${String(d).padStart(2,'0')}`;
-
-    if(!isWorking || isPast) {
-      html+=`<div class="cday off ${isToday?'today':''}"><div class="dn" style="color:#CCC">${d}</div></div>`;
+    if (resp.ok || resp.status === 201) {
+      emailVerildi = true;
+      gosterSonuc(sonucVerisi);
     } else {
-      const doluMap = getSlotsDolu(dr.id, dateStr);
-      const doluC = Object.values(doluMap).filter(Boolean).length;
-      const dotCls = doluC>=7?'dot-R':doluC>=4?'dot-O':'dot-G';
-      html+=`<div class="cday avail ${isToday?'today':''}" data-date="${dateStr}" data-day="${d}" onclick="selectDay(this)">
-        <div class="dn">${d}</div>
-        <div class="cdots"><div class="dot ${dotCls}"></div></div>
-      </div>`;
+      const err = await resp.text();
+      errEl.textContent = '⚠️ Bir hata oluştu, lütfen tekrar deneyin.';
+      btn.disabled = false;
+      btn.textContent = 'Sonucu Gör →';
     }
+  } catch (e) {
+    // Network hatası olsa bile sonucu göster (kullanıcı deneyimi)
+    emailVerildi = true;
+    gosterSonuc(sonucVerisi);
   }
-  document.getElementById('cal-grid').innerHTML = html;
 }
 
-function selectDay(el) {
-  document.querySelectorAll('.cday').forEach(c=>c.classList.remove('sel-day'));
-  el.classList.add('sel-day');
-  curDate = el.dataset.date;
-  curSlot = null;
+function gosterSonuc(s) {
+  const yorumRenk = s.util >= 90 ? 'var(--re)' : s.util >= 80 ? 'var(--wa)' : 'var(--gr)';
+  const yorum = s.util >= 90
+    ? `<strong>⚠️ Kritik Yük:</strong> %${s.util} kullanım çok yüksek. Küçük bir çağrı artışı bekleme sürelerini dramatik biçimde uzatır. Ek agent planlaması önerilir.`
+    : s.util >= 80
+    ? `<strong>✅ Verimli:</strong> %${s.util} kullanım sağlıklı bir denge. Hizmet seviyesi hedefi tutturulmuş durumda.`
+    : `<strong>📊 Kapasite var:</strong> %${s.util} kullanım — agent'larda boşluk mevcut. Çağrı tahminleri gözden geçirilebilir.`;
 
-  const d = parseInt(el.dataset.day);
-  const jsDay = new Date(2026,3,d).getDay();
-  const dNames = ['Pazar','Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi'];
-  document.getElementById('slots-date-lbl').textContent = `${dNames[jsDay]}, ${d} Nisan 2026`;
-
-  const doluMap = getSlotsDolu(curDoc.id, curDate);
-  const slots = ['09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00'];
-  let sHtml = slots.map(s=>{
-    const full = doluMap[s]||false;
-    return `<div class="slot ${full?'dolu':''}" onclick="${full?'':'selSlot(this,\''+s+'\')'}">${s}<br><span style="font-size:9px;color:${full?'#BBB':'var(--gr)'}">${full?'Dolu':'Müsait'}</span></div>`;
-  }).join('');
-  document.getElementById('slots-grid').innerHTML = sHtml;
-  document.getElementById('slots-area').style.display='block';
-  document.getElementById('confirm-area').innerHTML='';
-}
-
-function selSlot(el, saat) {
-  document.querySelectorAll('.slot').forEach(s=>s.classList.remove('sel-slot'));
-  el.classList.add('sel-slot');
-  curSlot = saat;
-  showConfirm();
-}
-
-function showConfirm() {
-  const hasta = document.getElementById('hasta-ad').value||'Hasta';
-  const hastane = picks['q-hastane']||'—';
-  const sikayet = picks['q-sikayet']||'—';
-  const d = parseInt(curDate.split('-')[2]);
-  const jsDay = new Date(2026,3,d).getDay();
-  const dNames = ['Pazar','Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi'];
-  const tarih = `${dNames[jsDay]}, ${d} Nisan 2026`;
-  const script = `Sayın ${hasta} Hanım/Bey, ${hastane} şubemizde ${curDoc.name} hekimimiz ile ${tarih} günü saat ${curSlot}'de randevunuzu oluşturdum. Muayene ücretiniz ₺${curDoc.muayene.toLocaleString('tr-TR')} olacaktır. Randevunuzu onaylıyor musunuz?`;
-
-  document.getElementById('confirm-area').innerHTML=`
-  <div class="confirm-box">
-    <h4>✅ Randevu Özeti</h4>
-    <div class="crow"><span class="clbl">Hasta</span><span class="cval">${hasta}</span></div>
-    <div class="crow"><span class="clbl">Hastane</span><span class="cval">${hastane}</span></div>
-    <div class="crow"><span class="clbl">Doktor</span><span class="cval">${curDoc.name}</span></div>
-    <div class="crow"><span class="clbl">Uzmanlık</span><span class="cval">${curDoc.spec}</span></div>
-    <div class="crow"><span class="clbl">Tarih</span><span class="cval">${tarih}</span></div>
-    <div class="crow"><span class="clbl">Saat</span><span class="cval">${curSlot}</span></div>
-    <div class="crow"><span class="clbl">Şikayet</span><span class="cval">${sikayet}</span></div>
-    <div class="crow"><span class="clbl">Muayene Ücreti</span><span class="cval">₺${curDoc.muayene.toLocaleString('tr-TR')}</span></div>
-    <div class="cscript"><div class="slbl">📞 Hastaya Söylenecek Onay Cümlesi</div>${script}</div>
-    <button class="btn-cfm" onclick="confirmRandevu('${hasta}','${tarih}')">✅ Randevuyu Onayla</button>
-    <button class="btn-cnc" onclick="document.getElementById('confirm-area').innerHTML=''">✕ İptal</button>
-  </div>`;
-  document.getElementById('confirm-area').scrollIntoView({behavior:'smooth',block:'start'});
-}
-
-function confirmRandevu(hasta, tarih) {
-  document.getElementById('confirm-area').innerHTML=`
-  <div class="success-box">
-    <div class="sico">🎉</div>
-    <h4>Randevu Oluşturuldu!</h4>
-    <p><strong>${hasta}</strong> için <strong>${curDoc.name}</strong> hekimiyle<br>
-    <strong>${tarih} — ${curSlot}</strong> randevusu kaydedildi.<br><br>
-    Muayene ücreti: <strong>₺${curDoc.muayene.toLocaleString('tr-TR')}</strong></p>
-    <button class="bor" style="margin-top:16px;" onclick="resetAll()">🔄 Yeni Randevu</button>
-  </div>`;
-}
-
-// ==================== DASHBOARD ====================
-let curPerG='gun', curPerH='gun', curPerD='gun';
-let selHospList = ['İstanbul-Etiler','İstanbul-Ataköy','Ankara'];
-
-const DASH = {
-  gun:{total:156,dol:77,ciro:'₺187K',ipt:'%7',
-    hDol:{'İstanbul-Etiler':79,'İstanbul-Ataköy':85,'Ankara':68},
-    trend:{l:['Pzt','Sal','Çar','Per','Cum','Cmt','Paz'],v:[65,82,91,88,95,74,48]},
-    drDol:{e1:82,e2:74,e3:63,e4:58,a1:88,a2:79,a3:71,a4:65,k1:76,k2:65}},
-  haf:{total:978,dol:73,ciro:'₺1.14M',ipt:'%6',
-    hDol:{'İstanbul-Etiler':74,'İstanbul-Ataköy':80,'Ankara':65},
-    trend:{l:['H-4','H-3','H-2','H-1','Bu Hf'],v:[82,88,76,92,73]},
-    drDol:{e1:79,e2:70,e3:60,e4:55,a1:84,a2:75,a3:68,a4:62,k1:71,k2:62}},
-  ayl:{total:4210,dol:75,ciro:'₺4.9M',ipt:'%7',
-    hDol:{'İstanbul-Etiler':77,'İstanbul-Ataköy':82,'Ankara':66},
-    trend:{l:['Oca','Şub','Mar','Nis'],v:[68,74,81,75]},
-    drDol:{e1:81,e2:72,e3:62,e4:57,a1:86,a2:77,a3:70,a4:64,k1:73,k2:64}}
-};
-
-function pfCls(p){return p>=85?'pfX':p>=75?'pfL':p>=60?'pfM':'pfH';}
-
-function dPer(p,btn){
-  curPerG=p;
-  document.querySelectorAll('.per-tabs')[0].querySelectorAll('.prbtn').forEach(b=>b.classList.remove('act'));
-  btn.classList.add('act');
-  document.getElementById('per-lbl-genel').textContent=p==='gun'?'Günlük':p==='haf'?'Haftalık':'Aylık';
-  renderDash(p);
-}
-function hPer(p,btn){
-  curPerH=p;
-  document.querySelectorAll('.per-tabs')[1].querySelectorAll('.prbtn').forEach(b=>b.classList.remove('act'));
-  btn.classList.add('act');
-  document.getElementById('per-lbl-hosp').textContent=p==='gun'?'Günlük':p==='haf'?'Haftalık':'Aylık';
-  renderHospDash(p);
-}
-function drPer(p,btn){
-  curPerD=p;
-  document.querySelectorAll('.per-tabs')[2].querySelectorAll('.prbtn').forEach(b=>b.classList.remove('act'));
-  btn.classList.add('act');
-  document.getElementById('per-lbl-dr').textContent=p==='gun'?'Günlük':p==='haf'?'Haftalık':'Aylık';
-  renderDrDash(p);
-}
-
-function toggleHosp(btn, hname) {
-  btn.classList.toggle('sel');
-  if(btn.classList.contains('sel')) {
-    if(!selHospList.includes(hname)) selHospList.push(hname);
-  } else {
-    selHospList = selHospList.filter(h=>h!==hname);
-  }
-  renderDrDash(curPerD);
-}
-
-function renderDash(p) {
-  const d = DASH[p];
-  document.getElementById('kv-tot').textContent = d.total.toLocaleString('tr-TR');
-  document.getElementById('kb-tot').textContent = '▲ %12 artış';
-  document.getElementById('kv-dol').textContent = '%'+d.dol;
-  const db = document.getElementById('kb-dol');
-  db.textContent = d.dol>=75?'⚠ Yüksek':d.dol>=60?'→ Normal':'↓ Düşük';
-  db.className = 'kbdg '+(d.dol>=75?'bwa':'');
-  document.getElementById('kv-cir').textContent = d.ciro;
-  document.getElementById('kv-ipt').textContent = d.ipt;
-
-  let hb='';
-  Object.entries(d.hDol).forEach(([n,pct])=>{
-    hb+=`<div class="hr"><div class="hn">${n}</div><div class="pb"><div class="pf ${pfCls(pct)}" style="width:${pct}%"></div></div><div class="hp" style="color:${dolColor(pct)}">%${pct}</div></div>`;
-  });
-  document.getElementById('hosp-bars').innerHTML=hb;
-
-  const mv=Math.max(...d.trend.v);
-  let tc='';
-  d.trend.l.forEach((l,i)=>{
-    const h=Math.round((d.trend.v[i]/mv)*82);
-    tc+=`<div class="bc"><div class="bb" style="height:${h}px;background:${d.trend.v[i]===mv?'var(--or)':'var(--pr2)'}"></div><div class="bl">${l}</div><div class="bv">${d.trend.v[i]}</div></div>`;
-  });
-  document.getElementById('trend-chart').innerHTML=tc;
-}
-
-function renderHospDash(p) {
-  const d = DASH[p];
-  let html='';
-  Object.entries(HOSP).forEach(([hname, h])=>{
-    const pct = d.hDol[hname]||70;
-    let drRows='';
-    h.doctors.forEach(dr=>{
-      const dp = d.drDol[dr.id]||60;
-      const init = dr.name.replace(/Prof\. Dr\.|Doç\. Dr\.|Op\. Dr\./g,'').trim().split(' ').slice(0,2).map(w=>w[0]).join('');
-      drRows+=`<div class="drw">
-        <div class="dav" style="background:${h.color}">${init}</div>
-        <div class="din" style="flex:1"><div class="nm">${dr.name}</div><div class="sp">${dr.spec}</div></div>
-        <div class="dbw"><div class="dbf ${pfCls(dp)}" style="width:${dp}%"></div></div>
-        <div class="dpct">%${dp}</div>
-      </div>`;
-    });
-    html+=`<div class="card">
-      <div class="ctitle">${hname}</div>
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--bd);">
-        <div style="flex:1">
-          <div style="font-size:11px;color:var(--tm);margin-bottom:4px;">Genel Doluluk</div>
-          <div class="pb"><div class="pf ${pfCls(pct)}" style="width:${pct}%"></div></div>
-        </div>
-        <div style="font-size:22px;font-weight:700;color:${dolColor(pct)}">%${pct}</div>
-      </div>
-      ${drRows}
-    </div>`;
-  });
-  document.getElementById('hosp-detail-cards').innerHTML=html;
-}
-
-function renderDrDash(p) {
-  const d = DASH[p];
-  const all = allDoctors().filter(dr => selHospList.includes(dr.hastane));
-
-  // Karşılaştırma tablosu
-  let tHtml=`<table class="cmp-table"><thead><tr>
-    <th>Doktor</th><th>Hastane</th><th>Uzmanlık</th><th>Doluluk</th><th>Çalışma</th>
+  let tabloHtml = `<table class="sl-table"><thead><tr>
+    <th>Agent</th><th>Hizmet Sev.</th><th>Ort. Bekleme</th><th>Kullanım</th>
   </tr></thead><tbody>`;
-  all.sort((a,b)=>(d.drDol[b.id]||0)-(d.drDol[a.id]||0)).forEach(dr=>{
-    const pct=d.drDol[dr.id]||60;
-    tHtml+=`<tr>
-      <td><strong>${dr.name}</strong></td>
-      <td><span style="font-size:11px;background:var(--bg);padding:2px 8px;border-radius:10px;">${dr.hastane}</span></td>
-      <td style="font-size:11px;color:var(--tm);">${dr.spec}</td>
-      <td>
-        <div style="display:flex;align-items:center;gap:6px;">
-          <div class="pb" style="min-width:60px;"><div class="pf ${pfCls(pct)}" style="width:${pct}%"></div></div>
-          <strong style="color:${dolColor(pct)};font-size:12px;">%${pct}</strong>
-        </div>
-      </td>
-      <td style="font-size:11px;color:var(--tm);">${dr.calismaTur}</td>
+  s.tablo.forEach(r => {
+    tabloHtml += `<tr ${r.opt ? 'class="opt"' : ''}>
+      <td>${r.n}${r.opt ? ' ⭐' : ''}</td>
+      <td style="color:${r.slN >= s.slGoal ? 'var(--gr)' : 'var(--re)'}">%${Math.round(r.slN * 100)}</td>
+      <td>${r.wN}${typeof r.wN === 'number' ? 'sn' : ''}</td>
+      <td>%${r.uN}</td>
     </tr>`;
   });
-  tHtml+='</tbody></table>';
-  document.getElementById('dr-cmp-table').innerHTML=tHtml;
+  tabloHtml += '</tbody></table>';
 
-  // Hastane bazlı mini kartlar
-  let cardsHtml='';
-  Object.entries(HOSP).filter(([hn])=>selHospList.includes(hn)).forEach(([hname,h])=>{
-    let rows='';
-    h.doctors.forEach(dr=>{
-      const pct=d.drDol[dr.id]||60;
-      const init=dr.name.replace(/Prof\. Dr\.|Doç\. Dr\.|Op\. Dr\./g,'').trim().split(' ').slice(0,2).map(w=>w[0]).join('');
-      rows+=`<div class="drw">
-        <div class="dav" style="background:${h.color};font-size:10px;">${init}</div>
-        <div class="din" style="flex:1"><div class="nm">${dr.name}</div><div class="sp">${dr.spec}</div><div class="hs">${dr.calismaTur}</div></div>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;">
-          <div class="dpct" style="color:${dolColor(pct)};font-size:13px;font-weight:700;">%${pct}</div>
-          <div class="dbw" style="min-width:50px;"><div class="dbf ${pfCls(pct)}" style="width:${pct}%"></div></div>
-        </div>
-      </div>`;
-    });
-    cardsHtml+=`<div class="card"><div class="ctitle">${hname}</div>${rows}</div>`;
-  });
-  document.getElementById('dr-detail-cards').innerHTML=cardsHtml;
+  document.getElementById('result-col').innerHTML = `
+    <div class="result-hero">
+      <div class="lbl">Toplam Agent İhtiyacı (Shrinkage Dahil)</div>
+      <div class="num">${s.final}</div>
+      <div class="sub">%${Math.round(s.shrink * 100)} shrinkage dahil — Saf ihtiyaç: ${s.raw} agent</div>
+    </div>
+
+    <div class="metrics">
+      <div class="metric"><div class="v">${s.A.toFixed(2)}</div><div class="l">Trafik Yükü</div></div>
+      <div class="metric"><div class="v">%${Math.round(s.sl * 100)}</div><div class="l">Hizmet Sev.</div></div>
+      <div class="metric"><div class="v">%${s.util}</div><div class="l">Kullanım</div></div>
+      <div class="metric"><div class="v">${s.avgW}sn</div><div class="l">Ort. Bekleme</div></div>
+      <div class="metric"><div class="v">${s.T}sn</div><div class="l">Toplam AHT</div></div>
+      <div class="metric"><div class="v">${Math.round(s.cph)}</div><div class="l">Çağrı/Saat</div></div>
+    </div>
+
+    <div class="info-box" style="border-color:${yorumRenk};background:${s.util>=90?'var(--res)':s.util>=80?'var(--was)':'var(--pr3)'};">${yorum}</div>
+
+    <div class="card" style="padding:16px;">
+      <div class="ctitle">Hizmet Seviyesi Tablosu</div>
+      <p style="font-size:11px;color:var(--tm);margin-bottom:10px;">Farklı agent sayılarında elde edilecek hizmet seviyeleri — ⭐ optimal nokta</p>
+      ${tabloHtml}
+    </div>
+
+    <div style="text-align:center;margin-top:8px;">
+      <button class="btn-outline" onclick="yeniHesapla()">🔄 Yeni Hesaplama</button>
+    </div>
+  `;
 }
 
-// ==================== ERLANG C ====================
-function erlangC(A,N){
-  if(N<=A) return 1;
-  let inv=1;
-  for(let i=1;i<=N;i++) inv=1+inv*i/A;
-  inv=1/inv;
-  return inv/(inv+(1-A/N)*(1-inv)/(A/N));
-}
-function SL(A,N,t,T){if(N<=A)return 0;return 1-erlangC(A,N)*Math.exp(-(N-A)*t/T);}
-
-function calcE(){
-  const per=parseInt(document.getElementById('e-per').value);
-  const calls=parseInt(document.getElementById('e-calls').value);
-  const aht=parseInt(document.getElementById('e-aht').value);
-  const acw=parseInt(document.getElementById('e-acw').value);
-  const shrink=parseInt(document.getElementById('e-shrink').value)/100;
-  const slGoal=parseInt(document.getElementById('e-sl').value)/100;
-  const tGoal=parseInt(document.getElementById('e-tgt').value);
-  if(!calls||!aht){document.getElementById('e-out').innerHTML='<div style="color:var(--re);padding:12px;">⚠️ Geçerli değer girin.</div>';return;}
-  const T=aht+acw;
-  const cph=calls*(60/per);
-  const A=(cph*T)/3600;
-  let N=Math.max(Math.ceil(A)+1,1), sl=0;
-  while(N<500){sl=SL(A,N,tGoal,T);if(sl>=slGoal)break;N++;}
-  const raw=N, final=Math.ceil(raw/(1-shrink));
-  const util=Math.round((A/raw)*100);
-  const ec=erlangC(A,raw);
-  const avgW=raw>A?Math.round((ec*T)/(raw-A)):999;
-
-  document.getElementById('e-out').innerHTML=`
-  <div class="eres-hero">
-    <div class="el">Toplam Agent İhtiyacı (Shrinkage Dahil)</div>
-    <div class="ev">${final}</div>
-    <div class="es">Shrinkage (%${Math.round(shrink*100)}) dahil — Saf ihtiyaç: ${raw} agent</div>
-  </div>
-  <div style="font-size:12px;color:var(--tm);padding:10px 13px;background:var(--bg);border-radius:8px;line-height:1.8;">
-    <strong>Çağrı yükü:</strong> ${cph.toFixed(0)}/saat &nbsp;·&nbsp; <strong>Toplam AHT:</strong> ${T}sn &nbsp;·&nbsp; <strong>Trafik Yoğunluğu (A):</strong> ${A.toFixed(2)}
-  </div>`;
-
-  document.getElementById('e-detail').style.display='block';
-  document.getElementById('e-metrics').innerHTML=`
-    <div class="emb"><div class="v">${A.toFixed(2)}</div><div class="l">Trafik Yoğunluğu (A)</div></div>
-    <div class="emb"><div class="v">%${Math.round(sl*100)}</div><div class="l">Hizmet Sev.</div></div>
-    <div class="emb"><div class="v">%${util}</div><div class="l">Kullanım</div></div>
-    <div class="emb"><div class="v">${avgW}sn</div><div class="l">Ort. Bekleme</div></div>
-    <div class="emb"><div class="v">${T}sn</div><div class="l">Toplam AHT</div></div>
-    <div class="emb"><div class="v">${final}</div><div class="l">Final Agent</div></div>`;
-
-  document.getElementById('e-yorum').innerHTML=
-    util>=90?`<strong>⚠️ Kritik Yük:</strong> %${util} kullanım çok yüksek.`:
-    util>=80?`<strong>✅ Verimli:</strong> %${util} kullanım sağlıklı bir denge.`:
-    `<strong>📊 Kapasite var:</strong> %${util} kullanım — agent'larda boşluk mevcut.`;
-
-  document.getElementById('e-tbl-card').style.display='block';
-  let tHtml=`<table style="width:100%;border-collapse:collapse;font-size:12px;">
-    <thead><tr style="background:var(--bg);">
-      <th style="padding:7px 10px;text-align:left;border-bottom:1px solid var(--bd);font-size:11px;font-weight:700;color:var(--tm);">Agent</th>
-      <th style="padding:7px 10px;text-align:center;border-bottom:1px solid var(--bd);font-size:11px;font-weight:700;color:var(--tm);">Hizmet Sev.</th>
-      <th style="padding:7px 10px;text-align:center;border-bottom:1px solid var(--bd);font-size:11px;font-weight:700;color:var(--tm);">Ort. Bekleme</th>
-      <th style="padding:7px 10px;text-align:center;border-bottom:1px solid var(--bd);font-size:11px;font-weight:700;color:var(--tm);">Kullanım</th>
-    </tr></thead><tbody>`;
-  for(let n=Math.max(Math.ceil(A)+1,raw-2);n<=raw+5;n++){
-    const slN=SL(A,n,tGoal,T), uN=Math.round((A/n)*100);
-    const ecN=erlangC(A,n), wN=n>A?Math.round((ecN*T)/(n-A)):'—';
-    const opt=n===raw;
-    tHtml+=`<tr ${opt?'style="background:var(--ors);font-weight:700;"':''}>
-      <td style="padding:7px 10px;border-bottom:1px solid var(--bd);">${n}${opt?' ⭐':''}</td>
-      <td style="padding:7px 10px;border-bottom:1px solid var(--bd);text-align:center;color:${slN>=slGoal?'var(--gr)':'var(--re)'};">%${Math.round(slN*100)}</td>
-      <td style="padding:7px 10px;border-bottom:1px solid var(--bd);text-align:center;">${wN}${typeof wN==='number'?'sn':''}</td>
-      <td style="padding:7px 10px;border-bottom:1px solid var(--bd);text-align:center;">%${uN}</td>
-    </tr>`;
-  }
-  tHtml+='</tbody></table>';
-  document.getElementById('e-tbl').innerHTML=tHtml;
+function yeniHesapla() {
+  document.getElementById('result-col').innerHTML = `
+    <div class="card">
+      <div class="ctitle">Hesaplama Sonucu</div>
+      <div class="ph"><div class="ico">🔢</div><div>Parametreleri girin ve hesapla butonuna basın</div></div>
+    </div>`;
 }
 </script>
 </body>
