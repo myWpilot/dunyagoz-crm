@@ -243,9 +243,15 @@ body{font-family:'Source Sans 3',-apple-system,BlinkMacSystemFont,'Segoe UI',san
       <div class="hdr-sub" id="hdr-sub">Kapasite Hesaplama · Bilgi · Trendler</div>
     </div>
   </div>
-  <div class="hdr-right">
-    <span style="color:rgba(255,255,255,.85);margin-right:8px;">© 2026 Tüm hakları <strong style="color:white;font-weight:700;">Volkan EREN</strong>'e aittir</span>
-    <a href="mailto:volkaneren34@hotmail.com" style="color:#7DD3FC;text-decoration:none;font-weight:700;">volkaneren34@hotmail.com</a>
+  <div class="hdr-right" style="display:flex;align-items:center;gap:12px;">
+    <span style="color:rgba(255,255,255,.7);font-size:11px;">© 2026 <strong style="color:white;">Volkan EREN</strong></span>
+    <a href="mailto:volkaneren34@hotmail.com" style="color:#7DD3FC;text-decoration:none;font-size:11px;font-weight:600;">volkaneren34@hotmail.com</a>
+    <a href="https://www.linkedin.com/in/volkan-eren-6978661/" target="_blank" title="LinkedIn" style="display:flex;align-items:center;opacity:.85;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.85">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="#7DD3FC"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+    </a>
+    <a href="https://wa.me/905322362361" target="_blank" title="WhatsApp" style="display:flex;align-items:center;opacity:.85;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.85">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
   </div>
 </header>
 
@@ -1186,17 +1192,19 @@ function applyLang() {
   if(stabOmni) stabOmni.textContent = curLang==='tr' ? '🌐 Omnichannel' : '🌐 Omnichannel';
   // Mode desc - keep current
   // Basit form labels
-  const labels = document.querySelectorAll('#panel-basit .flabel');
-  if(labels.length >= 8) {
-    labels[0].childNodes[0].textContent = L.perLabel;
-    labels[1].childNodes[0].textContent = L.callsLabel;
-    labels[2].childNodes[0].textContent = L.ahtLabel + ' ';
-    labels[3].childNodes[0].textContent = L.holdLabel + ' ';
-    labels[4].childNodes[0].textContent = L.acwLabel + ' ';
-    labels[5].childNodes[0].textContent = L.shrinkLabel + ' ';
-    labels[6].childNodes[0].textContent = L.slLabel + ' ';
-    labels[7].childNodes[0].textContent = L.tgtLabel + ' ';
-  }
+  try {
+    const labels = document.querySelectorAll('#panel-basit .flabel');
+    if(labels.length >= 8) {
+      if(labels[0].childNodes[0]) labels[0].childNodes[0].textContent = L.perLabel;
+      if(labels[1].childNodes[0]) labels[1].childNodes[0].textContent = L.callsLabel;
+      if(labels[2].childNodes[0]) labels[2].childNodes[0].textContent = L.ahtLabel + ' ';
+      if(labels[3].childNodes[0]) labels[3].childNodes[0].textContent = L.holdLabel + ' ';
+      if(labels[4].childNodes[0]) labels[4].childNodes[0].textContent = L.acwLabel + ' ';
+      if(labels[5].childNodes[0]) labels[5].childNodes[0].textContent = L.shrinkLabel + ' ';
+      if(labels[6].childNodes[0]) labels[6].childNodes[0].textContent = L.slLabel + ' ';
+      if(labels[7].childNodes[0]) labels[7].childNodes[0].textContent = L.tgtLabel + ' ';
+    }
+  } catch(e) {}
   // Period select options
   const perSel = document.getElementById('e-per');
   if(perSel) { perSel.options[0].text=L.per15; perSel.options[1].text=L.per30; perSel.options[2].text=L.per60; }
@@ -1212,13 +1220,15 @@ function applyLang() {
   const resultCard = document.querySelector('#result-col .ctitle');
   if(resultCard) resultCard.textContent = ' ' + L.resultTitle;
   // How it works
-  const steps = document.querySelectorAll('#panel-basit .step-txt');
-  if(steps.length >= 4) {
-    steps[0].innerHTML = `<strong>${L.step1t}</strong> ${L.step1d}`;
-    steps[1].innerHTML = `<strong>${L.step2t}</strong> ${L.step2d}`;
-    steps[2].innerHTML = `<strong>${L.step3t}</strong> ${L.step3d}`;
-    steps[3].innerHTML = `<strong>${L.step4t}</strong> ${L.step4d}`;
-  }
+  try {
+    const steps = document.querySelectorAll('#panel-basit .step-txt');
+    if(steps.length >= 4) {
+      steps[0].innerHTML = `<strong>${L.step1t}</strong> ${L.step1d}`;
+      steps[1].innerHTML = `<strong>${L.step2t}</strong> ${L.step2d}`;
+      steps[2].innerHTML = `<strong>${L.step3t}</strong> ${L.step3d}`;
+      steps[3].innerHTML = `<strong>${L.step4t}</strong> ${L.step4d}`;
+    }
+  } catch(e) {}
   // SEO block
   const seoHs = document.querySelectorAll('.seo-block h2');
   const seoPs = document.querySelectorAll('.seo-block p');
@@ -1229,11 +1239,13 @@ function applyLang() {
   if(seoPs[2]) seoPs[2].textContent = L.seoP3;
   if(seoPs[3]) seoPs[3].textContent = L.seoP4;
   // Omni labels
-  const oLabels = document.querySelectorAll('#panel-omni .flabel');
-  if(oLabels[0]) oLabels[0].childNodes[0].textContent = L.perLabel;
-  if(oLabels[1]) oLabels[1].childNodes[0].textContent = L.shrinkG + ' ';
-  if(oLabels[2]) oLabels[2].childNodes[0].textContent = L.slLabel + ' ';
-  if(oLabels[3]) oLabels[3].childNodes[0].textContent = L.tgtLabel + ' ';
+  try {
+    const oLabels = document.querySelectorAll('#panel-omni .flabel');
+    if(oLabels[0] && oLabels[0].childNodes[0]) oLabels[0].childNodes[0].textContent = L.perLabel;
+    if(oLabels[1] && oLabels[1].childNodes[0]) oLabels[1].childNodes[0].textContent = L.shrinkG + ' ';
+    if(oLabels[2] && oLabels[2].childNodes[0]) oLabels[2].childNodes[0].textContent = L.slLabel + ' ';
+    if(oLabels[3] && oLabels[3].childNodes[0]) oLabels[3].childNodes[0].textContent = L.tgtLabel + ' ';
+  } catch(e) {}
   // Channel headers
   const chH = document.querySelectorAll('.ch-header span');
   L.chHeaders.forEach((h,i)=>{ if(chH[i]) chH[i].textContent=h; });
@@ -1337,6 +1349,10 @@ function applyLang() {
     const el = document.getElementById(id);
     if(el) el.textContent = txt;
   });
+
+  // Bilgi Bankası intro header text
+  const akTitleEl = document.getElementById('ak-title');
+  if(akTitleEl) akTitleEl.textContent = curLang==='tr' ? 'Planlama Akademisi' : 'Planning Academy';
 
   // Channel header labels
   const chHIds = ['ch-h-kanal','ch-h-msgs','ch-h-aht','ch-h-acw','ch-h-es','ch-h-aktif'];
