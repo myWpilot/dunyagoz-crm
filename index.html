@@ -1279,9 +1279,15 @@ function applyLang() {
   const omniBtn = document.getElementById('btn-omni-calc');
   if(omniBtn) omniBtn.textContent = L.btnOmniCalc;
 
-  // Akademi sekme adı
-  const akademiBtn = document.getElementById('mtab-akademi');
-  if(akademiBtn) akademiBtn.textContent = L.modeAkademi || (curLang==='tr' ? '🎯 Planlama Akademisi' : '🎯 Planning Academy');
+  // Sekme adları
+  const hesapBtn2 = document.getElementById('mtab-hesap');
+  if(hesapBtn2) hesapBtn2.textContent = curLang==='tr' ? '🧮 Kapasite Hesaplama' : '🧮 Capacity Calculator';
+  const bilgiBtn2 = document.getElementById('mtab-bilgi');
+  if(bilgiBtn2) bilgiBtn2.textContent = curLang==='tr' ? '📚 Bilgi Bankası' : '📚 Knowledge Base';
+  const stabTemel2 = document.getElementById('stab-temel');
+  if(stabTemel2) stabTemel2.textContent = curLang==='tr' ? '📞 Temel' : '📞 Simple';
+  const stabOmni2 = document.getElementById('stab-omni');
+  if(stabOmni2) stabOmni2.textContent = curLang==='tr' ? '🌐 Omnichannel' : '🌐 Omnichannel';
 
   // Akademi içerik çevirileri
   const akEls = {
