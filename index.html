@@ -205,6 +205,30 @@ body{font-family:'Source Sans 3',-apple-system,BlinkMacSystemFont,'Segoe UI',san
 .inline-popup strong{color:var(--pr);}
 .inline-popup .close-pop{position:absolute;top:6px;right:8px;background:none;border:none;font-size:14px;cursor:pointer;color:var(--tl);}
 
+/* ACCORDION */
+.acc-cat{margin-bottom:16px;}
+.acc-cat-title{font-size:13px;font-weight:700;color:var(--pr);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;padding:0 4px;display:flex;align-items:center;gap:8px;}
+.acc-cat-title::after{content:'';flex:1;height:1px;background:var(--bd);}
+.acc-item{border:1.5px solid var(--bd);border-radius:9px;margin-bottom:6px;background:white;overflow:hidden;transition:border-color .2s;}
+.acc-item:hover{border-color:var(--pr4);}
+.acc-item.open{border-color:var(--pr2);}
+.acc-q{padding:14px 16px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;user-select:none;}
+.acc-q-text{font-size:13px;font-weight:600;color:var(--tx);line-height:1.5;}
+.acc-arrow{width:20px;height:20px;border-radius:50%;background:var(--pr3);color:var(--pr2);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px;transition:transform .25s;}
+.acc-item.open .acc-arrow{transform:rotate(180deg);background:var(--pr2);color:white;}
+.acc-body{display:none;padding:0 16px 16px;font-size:13px;color:var(--tm);line-height:1.8;border-top:1px solid var(--bd);}
+.acc-body.show{display:block;}
+.acc-body h4{font-size:12px;font-weight:700;color:var(--pr);margin:12px 0 6px;text-transform:uppercase;letter-spacing:.4px;}
+.acc-body ul,.acc-body ol{padding-left:18px;margin:6px 0;}
+.acc-body li{margin-bottom:4px;}
+.acc-body .formula{background:var(--pr3);border:1px solid var(--pr4);border-radius:7px;padding:10px 14px;font-family:monospace;font-size:12px;color:#0C447C;text-align:center;margin:10px 0;}
+.acc-body .tip{background:var(--was);border-left:3px solid var(--wa);border-radius:0 7px 7px 0;padding:10px 14px;font-size:12px;color:var(--wa);margin-top:10px;}
+.acc-body .warn{background:var(--res);border-left:3px solid var(--re);border-radius:0 7px 7px 0;padding:10px 14px;font-size:12px;color:var(--re);margin-top:10px;}
+.acc-body .good{background:var(--grs);border-left:3px solid var(--gr);border-radius:0 7px 7px 0;padding:10px 14px;font-size:12px;color:var(--gr);margin-top:10px;}
+.acc-body table{width:100%;border-collapse:collapse;margin:10px 0;font-size:12px;}
+.acc-body table th{background:var(--bg);padding:6px 10px;text-align:left;font-weight:700;border-bottom:1px solid var(--bd);}
+.acc-body table td{padding:6px 10px;border-bottom:1px solid var(--bd);}
+
 /* LANGUAGE TOGGLE */
 .lang-wrap{display:flex;align-items:center;gap:8px;margin-left:auto;}
 .lang-toggle{display:flex;background:#E2E8F0;border-radius:20px;padding:2px;gap:0;}
@@ -418,222 +442,21 @@ body{font-family:'Source Sans 3',-apple-system,BlinkMacSystemFont,'Segoe UI',san
 
   <!-- ===== BİLGİ BANKASI PANELİ ===== -->
   <div id="panel-bilgi" style="display:none;">
-    <div style="max-width:900px;margin:0 auto;">
+    <div style="max-width:860px;margin:0 auto;">
 
-      <!-- INTRO -->
-      <div class="card" style="background:linear-gradient(135deg,var(--pr) 0%,var(--pr2) 100%);color:white;text-align:center;padding:32px;">
-        <div style="font-size:32px;margin-bottom:12px;">🎯</div>
-        <h1 id="ak-title" style="font-size:22px;font-weight:700;margin-bottom:8px;">Planlama Akademisi</h1>
-        <p id="ak-subtitle" style="font-size:14px;opacity:.8;max-width:600px;margin:0 auto;">Çağrı merkezi ve contact center operasyonlarında temel formüller, kavramlar ve en iyi uygulamalar.</p>
+      <!-- Hero -->
+      <div class="card" style="background:linear-gradient(135deg,var(--pr) 0%,var(--pr2) 100%);color:white;text-align:center;padding:28px 32px;margin-bottom:20px;">
+        <div style="font-size:28px;margin-bottom:10px;">📚</div>
+        <h1 id="bb-title" style="font-size:20px;font-weight:700;margin-bottom:6px;">Bilgi Bankası</h1>
+        <p id="bb-subtitle" style="font-size:13px;opacity:.8;max-width:560px;margin:0 auto;">Çağrı merkezi ve contact center operasyonlarında sık sorulan sorular ve detaylı yanıtlar.</p>
       </div>
 
-      <!-- VERİMLİLİK -->
-      <div class="card" style="margin-top:16px;">
-        <div class="ctitle" id="ak-eff-title">📊 Verimlilik (Utilization) Hesaplama</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
-          <div>
-            <h3 id="ak-eff-formula-title" style="font-size:13px;font-weight:700;color:var(--pr);margin-bottom:10px;">Formül</h3>
-            <div style="background:var(--pr3);border:1px solid var(--pr4);border-radius:8px;padding:16px;font-family:monospace;font-size:13px;color:#0C447C;text-align:center;line-height:2;">
-              <div id="ak-eff-formula">(AHT × Çağrı Sayısı) ÷ (Çalışma Süresi × Agent Sayısı) × 100</div>
-            </div>
-            <div style="margin-top:12px;font-size:12px;color:var(--tm);line-height:1.8;" id="ak-eff-desc">
-              <p>Verimlilik, bir agentin çalışma süresi içinde ne kadarını aktif müşteri etkileşiminde geçirdiğini gösterir.</p>
-              <ul style="padding-left:16px;margin-top:8px;">
-                <li id="ak-eff-range"><strong>%70-80:</strong> İdeal aralık — yeterli yük, yeterli esneklik</li>
-                <li id="ak-eff-high"><strong>%85+:</strong> Kritik — bekleme süreleri artar, tükenmişlik riski</li>
-                <li id="ak-eff-low"><strong>%60 altı:</strong> Düşük — aşırı kadro veya düşük trafik</li>
-              </ul>
-            </div>
-          </div>
-          <div>
-            <h3 id="ak-eff-ex-title" style="font-size:13px;font-weight:700;color:var(--pr);margin-bottom:10px;">Örnek</h3>
-            <div style="background:var(--bg);border-radius:8px;padding:16px;font-size:12px;color:var(--tm);line-height:2;">
-              <div id="ak-eff-ex">
-                <div>• 10 agent, 8 saatlik vardiya</div>
-                <div>• Saatte 120 çağrı, AHT = 3 dakika</div>
-                <div style="margin-top:8px;padding:8px;background:white;border-radius:6px;border:1px solid var(--bd);">
-                  <strong style="color:var(--pr);">Verimlilik = (180sn × 960 çağrı) ÷ (28.800sn × 10 agent) × 100 = %60</strong>
-                </div>
-                <div style="margin-top:8px;color:var(--gr);">✅ Kabul edilebilir — ama trafik artışına dikkat!</div>
-              </div>
-            </div>
-            <div style="margin-top:10px;background:var(--was);border:1px solid #FDE68A;border-radius:7px;padding:10px 12px;font-size:11px;color:var(--wa);" id="ak-eff-tip">
-              💡 <strong>İpucu:</strong> Verimlilik hesaplarken sadece konuşma süresini değil, ACW (çağrı sonrası işlem) süresini de dahil edin.
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- SLA -->
-      <div class="card">
-        <div class="ctitle" id="ak-sla-title">⏱️ Hizmet Seviyesi (SLA) Hesaplama</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
-          <div>
-            <h3 id="ak-sla-formula-title" style="font-size:13px;font-weight:700;color:var(--pr);margin-bottom:10px;">Formül</h3>
-            <div style="background:var(--pr3);border:1px solid var(--pr4);border-radius:8px;padding:16px;font-family:monospace;font-size:13px;color:#0C447C;text-align:center;line-height:2;">
-              <div id="ak-sla-formula">X saniyede cevaplanan çağrılar ÷ Toplam çağrılar × 100</div>
-            </div>
-            <div style="margin-top:12px;font-size:12px;color:var(--tm);line-height:1.8;" id="ak-sla-desc">
-              <p><strong>80/20 standardı:</strong> Çağrıların %80'i 20 saniye içinde cevaplanmalı. Sektörde en yaygın hedef budur.</p>
-              <ul style="padding-left:16px;margin-top:8px;">
-                <li id="ak-sla-phone"><strong>Telefon:</strong> %80 / 20 saniye</li>
-                <li id="ak-sla-chat"><strong>Live Chat:</strong> %80 / 30 saniye</li>
-                <li id="ak-sla-wa"><strong>WhatsApp:</strong> %80 / 5 dakika</li>
-                <li id="ak-sla-email"><strong>E-mail:</strong> %90 / 4 saat</li>
-              </ul>
-            </div>
-          </div>
-          <div>
-            <h3 id="ak-sla-why-title" style="font-size:13px;font-weight:700;color:var(--pr);margin-bottom:10px;">Neden Önemli?</h3>
-            <div style="font-size:12px;color:var(--tm);line-height:1.9;" id="ak-sla-why">
-              <p>SLA, müşteri deneyiminin en doğrudan göstergesidir. Düşük SLA:</p>
-              <ul style="padding-left:16px;margin-top:6px;">
-                <li>Müşteri memnuniyetsizliği</li>
-                <li>Yüksek terk oranı (abandon rate)</li>
-                <li>Tekrar arama maliyeti</li>
-                <li>NPS skorunun düşmesi</li>
-              </ul>
-              <div style="margin-top:10px;background:var(--grs);border-radius:7px;padding:10px 12px;font-size:11px;color:var(--gr);">
-                💡 <strong id="ak-sla-tip-lbl">İpucu:</strong> <span id="ak-sla-tip">SLA hedefini tutturmak için bu araçtaki kapasite hesaplayıcıyı kullanın — saf ihtiyaç + shrinkage ile gerçek agent sayısını bulun.</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- AHT -->
-      <div class="card">
-        <div class="ctitle" id="ak-aht-title">📞 AHT Nedir ve Nasıl Düşürülür?</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
-          <div>
-            <h3 id="ak-aht-comp-title" style="font-size:13px;font-weight:700;color:var(--pr);margin-bottom:10px;">AHT Bileşenleri</h3>
-            <div style="font-size:12px;color:var(--tm);line-height:1.9;" id="ak-aht-comp">
-              <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;">
-                <div style="width:12px;height:12px;border-radius:3px;background:#185FA5;flex-shrink:0;"></div>
-                <div><strong>Talk Time:</strong> Müşteriyle konuşma süresi</div>
-              </div>
-              <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;">
-                <div style="width:12px;height:12px;border-radius:3px;background:#B45309;flex-shrink:0;"></div>
-                <div><strong>Hold Time:</strong> Bekletme süresi</div>
-              </div>
-              <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;">
-                <div style="width:12px;height:12px;border-radius:3px;background:#1A7F4B;flex-shrink:0;"></div>
-                <div><strong>ACW:</strong> Çağrı sonrası işlem süresi</div>
-              </div>
-              <div style="margin-top:10px;padding:10px;background:var(--bg);border-radius:7px;font-family:monospace;text-align:center;">
-                AHT = Talk + Hold + ACW
-              </div>
-            </div>
-          </div>
-          <div>
-            <h3 id="ak-aht-reduce-title" style="font-size:13px;font-weight:700;color:var(--pr);margin-bottom:10px;">AHT Düşürme Yolları</h3>
-            <ul style="font-size:12px;color:var(--tm);line-height:2;padding-left:16px;" id="ak-aht-reduce">
-              <li>Bilgi bankası ve CRM entegrasyonu</li>
-              <li>Agent coaching ve sürekli eğitim</li>
-              <li>Çağrı akış senaryolarının optimizasyonu</li>
-              <li>Gereksiz hold time'ı azaltma</li>
-              <li>ACW otomasyonu (otomatik notlama, CRM güncelleme)</li>
-              <li>İlk çağrıda çözüm (FCR) odağı</li>
-            </ul>
-            <div style="margin-top:8px;background:var(--res);border-radius:7px;padding:10px 12px;font-size:11px;color:var(--re);" id="ak-aht-warn">
-              ⚠️ <strong>Dikkat:</strong> AHT'yi yapay olarak düşürmek kaliteyi bozar. Hedef hızlı değil, etkili çözüm olmalı.
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- SHRINKAGE -->
-      <div class="card">
-        <div class="ctitle" id="ak-shrink-title">📉 Shrinkage Nedir?</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
-          <div>
-            <h3 id="ak-shrink-formula-title" style="font-size:13px;font-weight:700;color:var(--pr);margin-bottom:10px;">Formül</h3>
-            <div style="background:var(--pr3);border:1px solid var(--pr4);border-radius:8px;padding:16px;font-family:monospace;font-size:13px;color:#0C447C;text-align:center;line-height:2;" id="ak-shrink-formula">
-              Shrinkage = (Üretken olmayan saat ÷ Toplam çalışma saati) × 100
-            </div>
-            <div style="margin-top:12px;font-size:12px;color:var(--tm);line-height:1.8;" id="ak-shrink-items">
-              <p><strong>Shrinkage içeren kalemler:</strong></p>
-              <ul style="padding-left:16px;margin-top:6px;">
-                <li>Mola ve yemek arası</li>
-                <li>Toplantı ve brifing</li>
-                <li>Eğitim ve koçluk seansları</li>
-                <li>İzin ve hastalık</li>
-                <li>Sistem bekleme süreleri</li>
-              </ul>
-            </div>
-          </div>
-          <div>
-            <h3 id="ak-shrink-bench-title" style="font-size:13px;font-weight:700;color:var(--pr);margin-bottom:10px;">Sektör Kıyaslaması</h3>
-            <div style="font-size:12px;color:var(--tm);line-height:1.9;">
-              <div style="display:flex;justify-content:space-between;padding:6px 10px;background:var(--grs);border-radius:6px;margin-bottom:4px;">
-                <span id="ak-shrink-ideal">İdeal</span><strong style="color:var(--gr);">%20-25</strong>
-              </div>
-              <div style="display:flex;justify-content:space-between;padding:6px 10px;background:var(--was);border-radius:6px;margin-bottom:4px;">
-                <span id="ak-shrink-avg">Ortalama</span><strong style="color:var(--wa);">%25-30</strong>
-              </div>
-              <div style="display:flex;justify-content:space-between;padding:6px 10px;background:var(--res);border-radius:6px;">
-                <span id="ak-shrink-high">Yüksek</span><strong style="color:var(--re);">%30+</strong>
-              </div>
-              <div style="margin-top:10px;font-size:11px;padding:10px;background:var(--bg);border-radius:7px;" id="ak-shrink-tip">
-                💡 Shrinkage %35'i aşıyorsa operasyonel süreçlerin gözden geçirilmesi gerekir.
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- OMNICHANNEL TREND -->
-      <div class="card">
-        <div class="ctitle" id="ak-omni-title">🌐 Omnichannel Contact Center Trendleri 2026</div>
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;">
-          <div style="background:var(--pr3);border:1px solid var(--pr4);border-radius:8px;padding:14px;text-align:center;">
-            <div style="font-size:24px;font-weight:700;color:var(--pr);">%88</div>
-            <div style="font-size:11px;color:var(--tm);margin-top:4px;" id="ak-stat1">Contact center'ların AI benimseme oranı</div>
-          </div>
-          <div style="background:var(--grs);border:1px solid #BBF7D0;border-radius:8px;padding:14px;text-align:center;">
-            <div style="font-size:24px;font-weight:700;color:var(--gr);">%76</div>
-            <div style="font-size:11px;color:var(--tm);margin-top:4px;" id="ak-stat2">Rutin işler için AI, karmaşık için insan hibrit model</div>
-          </div>
-          <div style="background:var(--was);border:1px solid #FDE68A;border-radius:8px;padding:14px;text-align:center;">
-            <div style="font-size:24px;font-weight:700;color:var(--wa);">%7</div>
-            <div style="font-size:11px;color:var(--tm);margin-top:4px;" id="ak-stat3">Gerçek kesintisiz omnichannel deneyim yaşayan müşteri oranı</div>
-          </div>
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-          <div>
-            <h3 id="ak-trend-title" style="font-size:13px;font-weight:700;color:var(--pr);margin-bottom:10px;">Öne Çıkan Trendler</h3>
-            <ul style="font-size:12px;color:var(--tm);line-height:2;padding-left:16px;" id="ak-trends">
-              <li><strong>AI-First Contact Center</strong> — Rutin sorguları AI çözüyor</li>
-              <li><strong>CCaaS Büyümesi</strong> — Bulut tabanlı çözümler %35 büyüme</li>
-              <li><strong>Proaktif Destek</strong> — Müşteri sormadan ulaşmak</li>
-              <li><strong>Ses Biyometrisi</strong> — Deepfake ve güvenlik</li>
-              <li><strong>WFM Otomasyonu</strong> — Gerçek zamanlı kapasite ayarı</li>
-            </ul>
-          </div>
-          <div>
-            <h3 id="ak-channel-title" style="font-size:13px;font-weight:700;color:var(--pr);margin-bottom:10px;">Kanal Bazlı Eş Anlı Kapasite Kılavuzu</h3>
-            <div style="font-size:12px;color:var(--tm);">
-              <table style="width:100%;border-collapse:collapse;">
-                <thead><tr style="background:var(--bg);">
-                  <th style="padding:6px 8px;text-align:left;font-size:11px;" id="ak-ch-name">Kanal</th>
-                  <th style="padding:6px 8px;text-align:center;font-size:11px;" id="ak-ch-concurrent">Eş Anlı</th>
-                  <th style="padding:6px 8px;text-align:center;font-size:11px;" id="ak-ch-sl">Tipik SLA</th>
-                </tr></thead>
-                <tbody>
-                  <tr style="border-top:1px solid var(--bd);"><td style="padding:6px 8px;">📞 Telefon</td><td style="text-align:center;">1</td><td style="text-align:center;">80% / 20sn</td></tr>
-                  <tr style="border-top:1px solid var(--bd);"><td style="padding:6px 8px;">💬 WhatsApp</td><td style="text-align:center;">3-4</td><td style="text-align:center;">80% / 5dk</td></tr>
-                  <tr style="border-top:1px solid var(--bd);"><td style="padding:6px 8px;">💻 Live Chat</td><td style="text-align:center;">3-4</td><td style="text-align:center;">80% / 30sn</td></tr>
-                  <tr style="border-top:1px solid var(--bd);"><td style="padding:6px 8px;">📧 E-mail</td><td style="text-align:center;">5-8</td><td style="text-align:center;">90% / 4saat</td></tr>
-                  <tr style="border-top:1px solid var(--bd);"><td style="padding:6px 8px;">📱 Sosyal Medya</td><td style="text-align:center;">4-6</td><td style="text-align:center;">80% / 1saat</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
+      <!-- Accordion container -->
+      <div id="bb-accordion"></div>
 
     </div>
   </div>
+
 
   <!-- SEO CONTENT -->
   <div class="seo-block">
@@ -1171,6 +994,7 @@ function setLang(lang, btn) {
   document.querySelectorAll('.ltab').forEach(b=>b.classList.remove('act'));
   btn.classList.add('act');
   applyLang();
+  renderBilgi();
 }
 
 function applyLang() {
@@ -1364,8 +1188,100 @@ function applyLang() {
 }
 
 // ===== INIT =====
+// ===== BİLGİ BANKASI =====
+const BB_DATA = {
+  tr: [
+    { cat: "📊 Temel Metrikler", items: [
+      { q: "Çağrı merkezi verimliliği nasıl hesaplanır?", a: '<div class="formula">(AHT × Çağrı Sayısı) ÷ (Çalışma Süresi × Agent Sayısı) × 100</div><p>Verimlilik, bir agentin çalışma süresi içinde ne kadarını aktif müşteri etkileşiminde geçirdiğini gösterir.</p><table><tr><th>Aralık</th><th>Yorum</th></tr><tr><td>%70–80</td><td>✅ İdeal</td></tr><tr><td>%80–90</td><td>⚠️ Dikkat</td></tr><tr><td>%90+</td><td>🔴 Kritik</td></tr><tr><td>%60 altı</td><td>📉 Düşük</td></tr></table><div class="tip">💡 ACW süresini de hesaba dahil edin.</div>' },
+      { q: "SLA (Hizmet Seviyesi) nedir ve nasıl hesaplanır?", a: '<div class="formula">X saniyede cevaplanan çağrılar ÷ Toplam çağrılar × 100</div><p><strong>80/20 standardı:</strong> çağrıların %80i 20 saniyede cevaplanmalıdır.</p><table><tr><th>Kanal</th><th>Hedef</th><th>Süre</th></tr><tr><td>📞 Telefon</td><td>%80</td><td>20 sn</td></tr><tr><td>💬 WhatsApp</td><td>%80</td><td>5 dk</td></tr><tr><td>💻 Live Chat</td><td>%80</td><td>30 sn</td></tr><tr><td>📧 E-mail</td><td>%90</td><td>4 saat</td></tr><tr><td>📱 Sosyal Medya</td><td>%80</td><td>1 saat</td></tr></table><div class="good">✅ SLA hedefi için Kapasite Hesaplama sekmesini kullanın.</div>' },
+      { q: "AHT (Average Handle Time) nedir, bileşenleri nelerdir?", a: '<div class="formula">AHT = Talk Time + Hold Time + ACW</div><ul><li><strong>Talk Time:</strong> Aktif konuşma süresi</li><li><strong>Hold Time:</strong> Beklemeye alma süresi</li><li><strong>ACW:</strong> Çağrı sonrası not ve CRM güncelleme</li></ul><div class="warn">⚠️ AHT yapay düşürme kaliteyi bozar. Hedef etkili çözüm olmalıdır.</div>' },
+      { q: "Shrinkage nedir, kaç yüzde olmalıdır?", a: '<div class="formula">Shrinkage = (Üretken olmayan saat ÷ Toplam çalışma saati) × 100</div><table><tr><th>Seviye</th><th>Oran</th></tr><tr><td>İdeal</td><td>%20–25 ✅</td></tr><tr><td>Ortalama</td><td>%25–30 ⚠️</td></tr><tr><td>Yüksek</td><td>%30+ 🔴</td></tr></table><div class="tip">💡 Ham agent ihtiyacı ÷ (1 – Shrinkage%) formülünü kullanın.</div>' },
+      { q: "FCR (First Call Resolution) nedir?", a: '<div class="formula">FCR = Tek seferinde çözülen çağrılar ÷ Toplam çağrılar × 100</div><p>Sektör ortalaması %70–75. %80+ mükemmel performanstır.</p><div class="good">✅ FCR %1 artışı operasyonel maliyeti yaklaşık %1 düşürür.</div>' }
+    ]},
+    { cat: "🌐 Omnichannel & Dijital Kanallar", items: [
+      { q: "Eş anlı kapasite (concurrent capacity) ne demektir?", a: '<p>Bir agentin aynı anda yönetebileceği eş zamanlı konuşma sayısıdır.</p><table><tr><th>Kanal</th><th>Tipik Eş Anlı</th></tr><tr><td>📞 Telefon</td><td>1</td></tr><tr><td>💬 WhatsApp</td><td>3–4</td></tr><tr><td>💻 Live Chat</td><td>3–4</td></tr><tr><td>📧 E-mail</td><td>5–8</td></tr><tr><td>📱 Sosyal Medya</td><td>4–6</td></tr></table><div class="tip">💡 Eş anlı kapasite arttıkça aynı trafik için daha az agent gerekir.</div>' },
+      { q: "Omnichannel ile multichannel arasındaki fark nedir?", a: '<h4>Multichannel</h4><p>Kanallar bağımsız çalışır, müşteri geçmişi aktarılmaz.</p><h4>Omnichannel</h4><p>Tüm kanallar entegre; müşteri geçmişi her kanalda görünür.</p><div class="warn">⚠️ Müşterilerin yalnızca %7si gerçek omnichannel deneyim yaşıyor.</div>' },
+      { q: "WhatsApp ve chat için kapasite nasıl hesaplanır?", a: '<div class="formula">Erlang A = (Mesaj/Saat × AHT) ÷ (3600 × Eş Anlı Kapasite)</div><div class="tip">💡 Omnichannel Hesaplama sekmesi bu hesabı otomatik yapar.</div>' }
+    ]},
+    { cat: "🚀 Trendler & Gelecek", items: [
+      { q: "2026 contact center trendleri nelerdir?", a: '<table><tr><th>Trend</th><th>Etki</th></tr><tr><td>AI-First Contact Center</td><td>Rutin sorguların %40–60ı AI ile çözülüyor</td></tr><tr><td>CCaaS Büyümesi</td><td>8,3 milyar dolar pazar hacmi</td></tr><tr><td>Proaktif Destek</td><td>Müşteri sormadan önce ulaşma</td></tr><tr><td>Hibrit Model</td><td>%76 operasyon: rutin=AI, karmaşık=insan</td></tr></table><div class="good">✅ AI benimseme %88e ulaştı, entegrasyon en büyük zorluk.</div>' },
+      { q: "2030da contact center nasıl görünecek?", a: '<ul><li><strong>Hyper-personalization:</strong> Gerçek zamanlı veriyle kişiselleştirilmiş deneyim</li><li><strong>Predictive Engagement:</strong> Sorun oluşmadan önce müdahale</li><li><strong>Agent Augmentation:</strong> AI destekli gerçek zamanlı öneriler</li><li><strong>Kanal Birleşimi:</strong> Ses, metin, video tek akışta</li><li><strong>Esnek Çalışma:</strong> %60+ uzaktan çalışma</li></ul><div class="tip">💡 Bugün doğru kapasite planlayan ekipler bu dönüşüme hazırlıklı giriyor.</div>' },
+      { q: "AI agent ve insan agent dengesi nasıl kurulmalı?", a: '<table><tr><th>AI için Uygun</th><th>İnsan için Uygun</th></tr><tr><td>SSS yanıtlama</td><td>Şikayet yönetimi</td></tr><tr><td>Sipariş takibi</td><td>Empati gerektiren durumlar</td></tr><tr><td>7/24 ilk yanıt</td><td>Satış ve upsell</td></tr></table><div class="good">✅ Başarılı modeller AI ile insanı birbirinin yerine değil, birbirini güçlendirmek için kullanıyor.</div>' }
+    ]},
+    { cat: "💡 Operasyonel İpuçları", items: [
+      { q: "Kapasite planlaması hangi adımlardan oluşur?", a: '<ol><li><strong>Trafik tahmini:</strong> Geçmiş verilerden saatlik çağrı hacmini tahmin edin</li><li><strong>Erlang hesabı:</strong> AHT, SLA ve shrinkage ile ham agent ihtiyacını bulun</li><li><strong>Vardiya planlaması:</strong> Agentları vardiyalara dağıtın</li><li><strong>Gerçek zamanlı izleme:</strong> Adherence ve SLA canlı takip</li></ol><div class="good">✅ Bu aracın Kapasite Hesaplama sekmesi 2. adımı otomatik yapar.</div>' },
+      { q: "Abandon rate (terk oranı) nedir, nasıl düşürülür?", a: '<div class="formula">Abandon Rate = Terk eden çağrı ÷ Toplam gelen çağrı × 100</div><p>Sektör ortalaması %5–8. %10 üzeri ciddi sorundur.</p><ul><li>Yeterli kapasite planlaması</li><li>Geri arama (callback) seçeneği</li><li>IVR bekleme bildirimi</li><li>Asenkron kanallara yönlendirme</li></ul><div class="warn">⚠️ Erlang C terk oranını hesaba katmaz. Gerçek kapasiteye %10–15 buffer ekleyin.</div>' }
+    ]}
+  ],
+  en: [
+    { cat: "📊 Core Metrics", items: [
+      { q: "How is call center efficiency (utilization) calculated?", a: '<div class="formula">(AHT × Call Volume) ÷ (Work Time × Agent Count) × 100</div><table><tr><th>Range</th><th>Assessment</th></tr><tr><td>70–80%</td><td>✅ Ideal</td></tr><tr><td>80–90%</td><td>⚠️ Caution</td></tr><tr><td>90%+</td><td>🔴 Critical</td></tr><tr><td>Below 60%</td><td>📉 Low</td></tr></table><div class="tip">💡 Include ACW time in your utilization calculation.</div>' },
+      { q: "What is SLA in a call center and how is it calculated?", a: '<div class="formula">Calls answered in X seconds ÷ Total calls × 100</div><p><strong>80/20 standard:</strong> 80% of calls answered within 20 seconds.</p><table><tr><th>Channel</th><th>Target</th><th>Time</th></tr><tr><td>📞 Phone</td><td>80%</td><td>20 sec</td></tr><tr><td>💬 WhatsApp</td><td>80%</td><td>5 min</td></tr><tr><td>💻 Live Chat</td><td>80%</td><td>30 sec</td></tr><tr><td>📧 Email</td><td>90%</td><td>4 hours</td></tr></table><div class="good">✅ Use the Capacity Calculator tab to meet your SLA targets.</div>' },
+      { q: "What is AHT and what are its components?", a: '<div class="formula">AHT = Talk Time + Hold Time + ACW</div><ul><li><strong>Talk Time:</strong> Active conversation</li><li><strong>Hold Time:</strong> Customer on hold</li><li><strong>ACW:</strong> Notes, CRM updates</li></ul><div class="warn">⚠️ Artificially reducing AHT harms quality.</div>' },
+      { q: "What is shrinkage and what should it be?", a: '<div class="formula">Shrinkage = (Non-productive hours ÷ Total working hours) × 100</div><table><tr><th>Level</th><th>Rate</th></tr><tr><td>Ideal</td><td>20–25% ✅</td></tr><tr><td>Average</td><td>25–30% ⚠️</td></tr><tr><td>High</td><td>30%+ 🔴</td></tr></table><div class="tip">💡 Raw Agents ÷ (1 – Shrinkage%)</div>' },
+      { q: "What is FCR (First Call Resolution)?", a: '<div class="formula">FCR = Calls resolved on first contact ÷ Total calls × 100</div><p>Industry average: 70–75%. Above 80% is excellent.</p><div class="good">✅ A 1% FCR improvement reduces operational costs by ~1%.</div>' }
+    ]},
+    { cat: "🌐 Omnichannel & Digital Channels", items: [
+      { q: "What does concurrent capacity mean?", a: '<table><tr><th>Channel</th><th>Typical Concurrent</th></tr><tr><td>📞 Phone</td><td>1</td></tr><tr><td>💬 WhatsApp</td><td>3–4</td></tr><tr><td>💻 Live Chat</td><td>3–4</td></tr><tr><td>📧 Email</td><td>5–8</td></tr><tr><td>📱 Social Media</td><td>4–6</td></tr></table><div class="tip">💡 Higher concurrent = fewer agents needed for same traffic.</div>' },
+      { q: "What is the difference between omnichannel and multichannel?", a: '<h4>Multichannel</h4><p>Channels operate independently; customers repeat themselves.</p><h4>Omnichannel</h4><p>All channels integrated; customer history follows them.</p><div class="warn">⚠️ Only 7% of customers experience truly seamless omnichannel.</div>' },
+      { q: "How is capacity calculated for WhatsApp and chat?", a: '<div class="formula">Erlang A = (Messages/Hour × AHT) ÷ (3600 × Concurrent Capacity)</div><div class="tip">💡 Use the Omnichannel Calculator tab to automate this.</div>' }
+    ]},
+    { cat: "🚀 Trends & Future", items: [
+      { q: "What are the 2026 contact center trends?", a: '<table><tr><th>Trend</th><th>Impact</th></tr><tr><td>AI-First</td><td>40–60% of routine queries resolved by AI</td></tr><tr><td>CCaaS Growth</td><td>$8.3B market in 2026</td></tr><tr><td>Proactive Support</td><td>Reach customers before they ask</td></tr><tr><td>Hybrid Model</td><td>76%: routine=AI, complex=human</td></tr></table>' },
+      { q: "What will contact centers look like in 2030?", a: '<ul><li><strong>Hyper-personalization:</strong> Real-time personalized experience</li><li><strong>Predictive Engagement:</strong> Intervene before issues arise</li><li><strong>Agent Augmentation:</strong> AI-powered real-time suggestions</li><li><strong>Channel Convergence:</strong> Voice, text, video in one stream</li></ul><div class="tip">💡 Solid capacity planning today prepares you for this transformation.</div>' },
+      { q: "How should the AI vs human agent balance be set?", a: '<table><tr><th>Best for AI</th><th>Best for Human</th></tr><tr><td>FAQ answering</td><td>Complaint management</td></tr><tr><td>Order tracking</td><td>Empathy situations</td></tr><tr><td>24/7 first response</td><td>Sales and upsell</td></tr></table><div class="good">✅ Use AI to augment humans, not replace them.</div>' }
+    ]},
+    { cat: "💡 Operational Tips", items: [
+      { q: "What are the steps in call center capacity planning?", a: '<ol><li><strong>Traffic forecasting:</strong> Estimate call volume from historical data</li><li><strong>Erlang calculation:</strong> Find raw agent need</li><li><strong>Shift planning:</strong> Distribute agents across shifts</li><li><strong>Real-time monitoring:</strong> Track adherence and SLA live</li></ol><div class="good">✅ This tool automates step 2.</div>' },
+      { q: "What is abandon rate and how to reduce it?", a: '<div class="formula">Abandon Rate = Abandoned calls ÷ Total incoming calls × 100</div><p>Industry average: 5–8%. Above 10% is serious.</p><ul><li>Proper capacity planning</li><li>Offer callback option</li><li>Route to async channels</li></ul><div class="warn">⚠️ Erlang C ignores abandonment. Add 10–15% buffer.</div>' }
+    ]}
+  ]
+};
+
+function renderBilgi() {
+  const data = BB_DATA[curLang] || BB_DATA.tr;
+  const container = document.getElementById('bb-accordion');
+  if(!container) return;
+  const bbTitle = document.getElementById('bb-title');
+  const bbSub = document.getElementById('bb-subtitle');
+  if(bbTitle) bbTitle.textContent = curLang==='tr' ? 'Bilgi Bankası' : 'Knowledge Base';
+  if(bbSub) bbSub.textContent = curLang==='tr'
+    ? 'Çağrı merkezi ve contact center operasyonlarında sık sorulan sorular ve detaylı yanıtlar.'
+    : 'Frequently asked questions and detailed answers in call center and contact center operations.';
+  container.innerHTML = '';
+  data.forEach(cat => {
+    const catDiv = document.createElement('div');
+    catDiv.className = 'acc-cat';
+    catDiv.innerHTML = '<div class="acc-cat-title">' + cat.cat + '</div>';
+    cat.items.forEach(item => {
+      const itemDiv = document.createElement('div');
+      itemDiv.className = 'acc-item';
+      itemDiv.innerHTML =
+        '<div class="acc-q" onclick="toggleAcc(this)">' +
+          '<span class="acc-q-text">' + item.q + '</span>' +
+          '<span class="acc-arrow">▼</span>' +
+        '</div>' +
+        '<div class="acc-body">' + item.a + '</div>';
+      catDiv.appendChild(itemDiv);
+    });
+    container.appendChild(catDiv);
+  });
+}
+
+function toggleAcc(qEl) {
+  const item = qEl.closest('.acc-item');
+  const body = item.querySelector('.acc-body');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.acc-item.open').forEach(el => {
+    el.classList.remove('open');
+    el.querySelector('.acc-body').classList.remove('show');
+  });
+  if(!isOpen) { item.classList.add('open'); body.classList.add('show'); }
+}
+
 renderChannels();
 applyLang();
+renderBilgi();
 </script>
 </body>
 </html>
