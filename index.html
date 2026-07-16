@@ -239,8 +239,8 @@ body{font-family:'Source Sans 3',-apple-system,BlinkMacSystemFont,'Segoe UI',san
       </svg>
     </div>
     <div>
-      <div class="hdr-title">Kapasite Hesaplama Aracı</div>
-      <div class="hdr-sub">Çağrı Merkezi Planlama</div>
+      <div class="hdr-title" id="hdr-title">Contact Center Hub</div>
+      <div class="hdr-sub" id="hdr-sub">Kapasite Hesaplama · Bilgi · Trendler</div>
     </div>
   </div>
   <div class="hdr-right">
@@ -253,8 +253,8 @@ body{font-family:'Source Sans 3',-apple-system,BlinkMacSystemFont,'Segoe UI',san
 <div class="mode-bar">
   <span class="mode-label">Hesaplama Modu:</span>
   <div class="mode-tabs">
-    <button class="mtab act" onclick="setMode('basit',this)">📞 Temel</button>
-    <button class="mtab" onclick="setMode('omni',this)">🌐 Omnichannel</button>
+    <button class="mtab act" onclick="setMode('hesap',this)" id="mtab-hesap">🧮 Kapasite Hesaplama</button>
+    <button class="mtab" onclick="setMode('bilgi',this)" id="mtab-bilgi">📚 Bilgi Bankası</button>
   </div>
   <span class="mode-desc" id="mode-desc">Tek kanal (telefon) için hızlı hesaplama</span>
   <div class="lang-wrap">
@@ -267,7 +267,13 @@ body{font-family:'Source Sans 3',-apple-system,BlinkMacSystemFont,'Segoe UI',san
 
 <main class="main">
 
-  <!-- ===== BASİT MOD ===== -->
+  <!-- ===== HESAPLAMA PANELİ ===== -->
+  <div id="panel-hesap">
+    <!-- Sub tabs -->
+    <div style="display:flex;gap:4px;background:var(--bd);padding:3px;border-radius:8px;width:fit-content;margin-bottom:20px;">
+      <button class="mtab act" id="stab-temel" onclick="setSubMode('basit',this)" style="font-size:12px;padding:6px 16px;">📞 Temel</button>
+      <button class="mtab" id="stab-omni" onclick="setSubMode('omni',this)" style="font-size:12px;padding:6px 16px;">🌐 Omnichannel</button>
+    </div>
   <div id="panel-basit">
     <div class="layout">
       <div>
@@ -403,7 +409,228 @@ body{font-family:'Source Sans 3',-apple-system,BlinkMacSystemFont,'Segoe UI',san
     </div>
   </div>
 
-    <!-- SEO CONTENT -->
+    </div> <!-- /panel-hesap -->
+
+  <!-- ===== BİLGİ BANKASI PANELİ ===== -->
+  <div id="panel-bilgi" style="display:none;">
+    <div style="max-width:900px;margin:0 auto;">
+
+      <!-- INTRO -->
+      <div class="card" style="background:linear-gradient(135deg,var(--pr) 0%,var(--pr2) 100%);color:white;text-align:center;padding:32px;">
+        <div style="font-size:32px;margin-bottom:12px;">🎯</div>
+        <h1 id="ak-title" style="font-size:22px;font-weight:700;margin-bottom:8px;">Planlama Akademisi</h1>
+        <p id="ak-subtitle" style="font-size:14px;opacity:.8;max-width:600px;margin:0 auto;">Çağrı merkezi ve contact center operasyonlarında temel formüller, kavramlar ve en iyi uygulamalar.</p>
+      </div>
+
+      <!-- VERİMLİLİK -->
+      <div class="card" style="margin-top:16px;">
+        <div class="ctitle" id="ak-eff-title">📊 Verimlilik (Utilization) Hesaplama</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+          <div>
+            <h3 id="ak-eff-formula-title" style="font-size:13px;font-weight:700;color:var(--pr);margin-bottom:10px;">Formül</h3>
+            <div style="background:var(--pr3);border:1px solid var(--pr4);border-radius:8px;padding:16px;font-family:monospace;font-size:13px;color:#0C447C;text-align:center;line-height:2;">
+              <div id="ak-eff-formula">(AHT × Çağrı Sayısı) ÷ (Çalışma Süresi × Agent Sayısı) × 100</div>
+            </div>
+            <div style="margin-top:12px;font-size:12px;color:var(--tm);line-height:1.8;" id="ak-eff-desc">
+              <p>Verimlilik, bir agentin çalışma süresi içinde ne kadarını aktif müşteri etkileşiminde geçirdiğini gösterir.</p>
+              <ul style="padding-left:16px;margin-top:8px;">
+                <li id="ak-eff-range"><strong>%70-80:</strong> İdeal aralık — yeterli yük, yeterli esneklik</li>
+                <li id="ak-eff-high"><strong>%85+:</strong> Kritik — bekleme süreleri artar, tükenmişlik riski</li>
+                <li id="ak-eff-low"><strong>%60 altı:</strong> Düşük — aşırı kadro veya düşük trafik</li>
+              </ul>
+            </div>
+          </div>
+          <div>
+            <h3 id="ak-eff-ex-title" style="font-size:13px;font-weight:700;color:var(--pr);margin-bottom:10px;">Örnek</h3>
+            <div style="background:var(--bg);border-radius:8px;padding:16px;font-size:12px;color:var(--tm);line-height:2;">
+              <div id="ak-eff-ex">
+                <div>• 10 agent, 8 saatlik vardiya</div>
+                <div>• Saatte 120 çağrı, AHT = 3 dakika</div>
+                <div style="margin-top:8px;padding:8px;background:white;border-radius:6px;border:1px solid var(--bd);">
+                  <strong style="color:var(--pr);">Verimlilik = (180sn × 960 çağrı) ÷ (28.800sn × 10 agent) × 100 = %60</strong>
+                </div>
+                <div style="margin-top:8px;color:var(--gr);">✅ Kabul edilebilir — ama trafik artışına dikkat!</div>
+              </div>
+            </div>
+            <div style="margin-top:10px;background:var(--was);border:1px solid #FDE68A;border-radius:7px;padding:10px 12px;font-size:11px;color:var(--wa);" id="ak-eff-tip">
+              💡 <strong>İpucu:</strong> Verimlilik hesaplarken sadece konuşma süresini değil, ACW (çağrı sonrası işlem) süresini de dahil edin.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLA -->
+      <div class="card">
+        <div class="ctitle" id="ak-sla-title">⏱️ Hizmet Seviyesi (SLA) Hesaplama</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+          <div>
+            <h3 id="ak-sla-formula-title" style="font-size:13px;font-weight:700;color:var(--pr);margin-bottom:10px;">Formül</h3>
+            <div style="background:var(--pr3);border:1px solid var(--pr4);border-radius:8px;padding:16px;font-family:monospace;font-size:13px;color:#0C447C;text-align:center;line-height:2;">
+              <div id="ak-sla-formula">X saniyede cevaplanan çağrılar ÷ Toplam çağrılar × 100</div>
+            </div>
+            <div style="margin-top:12px;font-size:12px;color:var(--tm);line-height:1.8;" id="ak-sla-desc">
+              <p><strong>80/20 standardı:</strong> Çağrıların %80'i 20 saniye içinde cevaplanmalı. Sektörde en yaygın hedef budur.</p>
+              <ul style="padding-left:16px;margin-top:8px;">
+                <li id="ak-sla-phone"><strong>Telefon:</strong> %80 / 20 saniye</li>
+                <li id="ak-sla-chat"><strong>Live Chat:</strong> %80 / 30 saniye</li>
+                <li id="ak-sla-wa"><strong>WhatsApp:</strong> %80 / 5 dakika</li>
+                <li id="ak-sla-email"><strong>E-mail:</strong> %90 / 4 saat</li>
+              </ul>
+            </div>
+          </div>
+          <div>
+            <h3 id="ak-sla-why-title" style="font-size:13px;font-weight:700;color:var(--pr);margin-bottom:10px;">Neden Önemli?</h3>
+            <div style="font-size:12px;color:var(--tm);line-height:1.9;" id="ak-sla-why">
+              <p>SLA, müşteri deneyiminin en doğrudan göstergesidir. Düşük SLA:</p>
+              <ul style="padding-left:16px;margin-top:6px;">
+                <li>Müşteri memnuniyetsizliği</li>
+                <li>Yüksek terk oranı (abandon rate)</li>
+                <li>Tekrar arama maliyeti</li>
+                <li>NPS skorunun düşmesi</li>
+              </ul>
+              <div style="margin-top:10px;background:var(--grs);border-radius:7px;padding:10px 12px;font-size:11px;color:var(--gr);">
+                💡 <strong id="ak-sla-tip-lbl">İpucu:</strong> <span id="ak-sla-tip">SLA hedefini tutturmak için bu araçtaki kapasite hesaplayıcıyı kullanın — saf ihtiyaç + shrinkage ile gerçek agent sayısını bulun.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AHT -->
+      <div class="card">
+        <div class="ctitle" id="ak-aht-title">📞 AHT Nedir ve Nasıl Düşürülür?</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+          <div>
+            <h3 id="ak-aht-comp-title" style="font-size:13px;font-weight:700;color:var(--pr);margin-bottom:10px;">AHT Bileşenleri</h3>
+            <div style="font-size:12px;color:var(--tm);line-height:1.9;" id="ak-aht-comp">
+              <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;">
+                <div style="width:12px;height:12px;border-radius:3px;background:#185FA5;flex-shrink:0;"></div>
+                <div><strong>Talk Time:</strong> Müşteriyle konuşma süresi</div>
+              </div>
+              <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;">
+                <div style="width:12px;height:12px;border-radius:3px;background:#B45309;flex-shrink:0;"></div>
+                <div><strong>Hold Time:</strong> Bekletme süresi</div>
+              </div>
+              <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;">
+                <div style="width:12px;height:12px;border-radius:3px;background:#1A7F4B;flex-shrink:0;"></div>
+                <div><strong>ACW:</strong> Çağrı sonrası işlem süresi</div>
+              </div>
+              <div style="margin-top:10px;padding:10px;background:var(--bg);border-radius:7px;font-family:monospace;text-align:center;">
+                AHT = Talk + Hold + ACW
+              </div>
+            </div>
+          </div>
+          <div>
+            <h3 id="ak-aht-reduce-title" style="font-size:13px;font-weight:700;color:var(--pr);margin-bottom:10px;">AHT Düşürme Yolları</h3>
+            <ul style="font-size:12px;color:var(--tm);line-height:2;padding-left:16px;" id="ak-aht-reduce">
+              <li>Bilgi bankası ve CRM entegrasyonu</li>
+              <li>Agent coaching ve sürekli eğitim</li>
+              <li>Çağrı akış senaryolarının optimizasyonu</li>
+              <li>Gereksiz hold time'ı azaltma</li>
+              <li>ACW otomasyonu (otomatik notlama, CRM güncelleme)</li>
+              <li>İlk çağrıda çözüm (FCR) odağı</li>
+            </ul>
+            <div style="margin-top:8px;background:var(--res);border-radius:7px;padding:10px 12px;font-size:11px;color:var(--re);" id="ak-aht-warn">
+              ⚠️ <strong>Dikkat:</strong> AHT'yi yapay olarak düşürmek kaliteyi bozar. Hedef hızlı değil, etkili çözüm olmalı.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SHRINKAGE -->
+      <div class="card">
+        <div class="ctitle" id="ak-shrink-title">📉 Shrinkage Nedir?</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+          <div>
+            <h3 id="ak-shrink-formula-title" style="font-size:13px;font-weight:700;color:var(--pr);margin-bottom:10px;">Formül</h3>
+            <div style="background:var(--pr3);border:1px solid var(--pr4);border-radius:8px;padding:16px;font-family:monospace;font-size:13px;color:#0C447C;text-align:center;line-height:2;" id="ak-shrink-formula">
+              Shrinkage = (Üretken olmayan saat ÷ Toplam çalışma saati) × 100
+            </div>
+            <div style="margin-top:12px;font-size:12px;color:var(--tm);line-height:1.8;" id="ak-shrink-items">
+              <p><strong>Shrinkage içeren kalemler:</strong></p>
+              <ul style="padding-left:16px;margin-top:6px;">
+                <li>Mola ve yemek arası</li>
+                <li>Toplantı ve brifing</li>
+                <li>Eğitim ve koçluk seansları</li>
+                <li>İzin ve hastalık</li>
+                <li>Sistem bekleme süreleri</li>
+              </ul>
+            </div>
+          </div>
+          <div>
+            <h3 id="ak-shrink-bench-title" style="font-size:13px;font-weight:700;color:var(--pr);margin-bottom:10px;">Sektör Kıyaslaması</h3>
+            <div style="font-size:12px;color:var(--tm);line-height:1.9;">
+              <div style="display:flex;justify-content:space-between;padding:6px 10px;background:var(--grs);border-radius:6px;margin-bottom:4px;">
+                <span id="ak-shrink-ideal">İdeal</span><strong style="color:var(--gr);">%20-25</strong>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding:6px 10px;background:var(--was);border-radius:6px;margin-bottom:4px;">
+                <span id="ak-shrink-avg">Ortalama</span><strong style="color:var(--wa);">%25-30</strong>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding:6px 10px;background:var(--res);border-radius:6px;">
+                <span id="ak-shrink-high">Yüksek</span><strong style="color:var(--re);">%30+</strong>
+              </div>
+              <div style="margin-top:10px;font-size:11px;padding:10px;background:var(--bg);border-radius:7px;" id="ak-shrink-tip">
+                💡 Shrinkage %35'i aşıyorsa operasyonel süreçlerin gözden geçirilmesi gerekir.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- OMNICHANNEL TREND -->
+      <div class="card">
+        <div class="ctitle" id="ak-omni-title">🌐 Omnichannel Contact Center Trendleri 2026</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;">
+          <div style="background:var(--pr3);border:1px solid var(--pr4);border-radius:8px;padding:14px;text-align:center;">
+            <div style="font-size:24px;font-weight:700;color:var(--pr);">%88</div>
+            <div style="font-size:11px;color:var(--tm);margin-top:4px;" id="ak-stat1">Contact center'ların AI benimseme oranı</div>
+          </div>
+          <div style="background:var(--grs);border:1px solid #BBF7D0;border-radius:8px;padding:14px;text-align:center;">
+            <div style="font-size:24px;font-weight:700;color:var(--gr);">%76</div>
+            <div style="font-size:11px;color:var(--tm);margin-top:4px;" id="ak-stat2">Rutin işler için AI, karmaşık için insan hibrit model</div>
+          </div>
+          <div style="background:var(--was);border:1px solid #FDE68A;border-radius:8px;padding:14px;text-align:center;">
+            <div style="font-size:24px;font-weight:700;color:var(--wa);">%7</div>
+            <div style="font-size:11px;color:var(--tm);margin-top:4px;" id="ak-stat3">Gerçek kesintisiz omnichannel deneyim yaşayan müşteri oranı</div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div>
+            <h3 id="ak-trend-title" style="font-size:13px;font-weight:700;color:var(--pr);margin-bottom:10px;">Öne Çıkan Trendler</h3>
+            <ul style="font-size:12px;color:var(--tm);line-height:2;padding-left:16px;" id="ak-trends">
+              <li><strong>AI-First Contact Center</strong> — Rutin sorguları AI çözüyor</li>
+              <li><strong>CCaaS Büyümesi</strong> — Bulut tabanlı çözümler %35 büyüme</li>
+              <li><strong>Proaktif Destek</strong> — Müşteri sormadan ulaşmak</li>
+              <li><strong>Ses Biyometrisi</strong> — Deepfake ve güvenlik</li>
+              <li><strong>WFM Otomasyonu</strong> — Gerçek zamanlı kapasite ayarı</li>
+            </ul>
+          </div>
+          <div>
+            <h3 id="ak-channel-title" style="font-size:13px;font-weight:700;color:var(--pr);margin-bottom:10px;">Kanal Bazlı Eş Anlı Kapasite Kılavuzu</h3>
+            <div style="font-size:12px;color:var(--tm);">
+              <table style="width:100%;border-collapse:collapse;">
+                <thead><tr style="background:var(--bg);">
+                  <th style="padding:6px 8px;text-align:left;font-size:11px;" id="ak-ch-name">Kanal</th>
+                  <th style="padding:6px 8px;text-align:center;font-size:11px;" id="ak-ch-concurrent">Eş Anlı</th>
+                  <th style="padding:6px 8px;text-align:center;font-size:11px;" id="ak-ch-sl">Tipik SLA</th>
+                </tr></thead>
+                <tbody>
+                  <tr style="border-top:1px solid var(--bd);"><td style="padding:6px 8px;">📞 Telefon</td><td style="text-align:center;">1</td><td style="text-align:center;">80% / 20sn</td></tr>
+                  <tr style="border-top:1px solid var(--bd);"><td style="padding:6px 8px;">💬 WhatsApp</td><td style="text-align:center;">3-4</td><td style="text-align:center;">80% / 5dk</td></tr>
+                  <tr style="border-top:1px solid var(--bd);"><td style="padding:6px 8px;">💻 Live Chat</td><td style="text-align:center;">3-4</td><td style="text-align:center;">80% / 30sn</td></tr>
+                  <tr style="border-top:1px solid var(--bd);"><td style="padding:6px 8px;">📧 E-mail</td><td style="text-align:center;">5-8</td><td style="text-align:center;">90% / 4saat</td></tr>
+                  <tr style="border-top:1px solid var(--bd);"><td style="padding:6px 8px;">📱 Sosyal Medya</td><td style="text-align:center;">4-6</td><td style="text-align:center;">80% / 1saat</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SEO CONTENT -->
   <div class="seo-block">
     <div class="seo-grid">
       <div>
@@ -612,12 +839,20 @@ function applyAllAHT() {
 
 // ===== MODE =====
 function setMode(mode, btn) {
-  document.querySelectorAll('.mtab').forEach(b=>b.classList.remove('act'));
+  document.querySelectorAll('.mode-tabs .mtab').forEach(b=>b.classList.remove('act'));
   btn.classList.add('act');
-  document.getElementById('panel-basit').style.display = mode==='basit'?'block':'none';
-  document.getElementById('panel-omni').style.display  = mode==='omni'?'block':'none';
+  document.getElementById('panel-hesap').style.display = mode==='hesap' ? 'block' : 'none';
+  document.getElementById('panel-bilgi').style.display = mode==='bilgi' ? 'block' : 'none';
   const L = LANG[curLang];
-  document.getElementById('mode-desc').textContent = mode==='basit' ? L.modeDescBasit : L.modeDescOmni;
+  const descs = {hesap: L.modeDescHesap, bilgi: L.modeDescBilgi};
+  document.getElementById('mode-desc').textContent = descs[mode] || '';
+}
+
+function setSubMode(mode, btn) {
+  document.querySelectorAll('#panel-hesap > div:first-child .mtab').forEach(b=>b.classList.remove('act'));
+  btn.classList.add('act');
+  document.getElementById('panel-basit').style.display = mode==='basit' ? 'block' : 'none';
+  document.getElementById('panel-omni').style.display  = mode==='omni'  ? 'block' : 'none';
 }
 
 // ===== ERLANG =====
@@ -794,9 +1029,12 @@ const LANG = {
     hdrSub: "Çağrı Merkezi Planlama",
     modeLabel: "Hesaplama Modu:",
     modeBasit: "📞 Temel",
+    modeOmniLbl: "🌐 Omnichannel",
+    modeAkademi: "🎯 Planlama Akademisi",
     modeOmni: "🌐 Omnichannel",
     modeDescBasit: "Tek kanal (telefon) için hızlı hesaplama",
     modeDescOmni: "Telefon, WhatsApp, e-mail ve tüm kanallar için toplam agent ihtiyacı",
+    modeDescAkademi: "Çağrı merkezi formülleri, SLA, verimlilik ve 2026 trendleri",
     btnCalc: "🔢 Hesapla",
     btnOmniCalc: "🌐 Omnichannel Hesapla",
     btnNew: "🔄 Yeni Hesaplama",
@@ -858,9 +1096,12 @@ const LANG = {
     hdrSub: "Contact Center Planning",
     modeLabel: "Calculation Mode:",
     modeBasit: "📞 Simple",
+    modeOmniLbl: "🌐 Omnichannel",
+    modeAkademi: "🎯 Planning Academy",
     modeOmni: "🌐 Omnichannel",
     modeDescBasit: "Quick calculation for single channel (phone)",
     modeDescOmni: "Total agent requirements for phone, WhatsApp, email and all channels",
+    modeDescAkademi: "Call center formulas, SLA, efficiency metrics and 2026 trends",
     btnCalc: "🔢 Calculate",
     btnOmniCalc: "🌐 Calculate Omnichannel",
     btnNew: "🔄 New Calculation",
@@ -930,15 +1171,21 @@ function setLang(lang, btn) {
 function applyLang() {
   const L = LANG[curLang];
   // Header
-  document.querySelector('.hdr-title').textContent = L.hdrTitle;
-  document.querySelector('.hdr-sub').textContent = L.hdrSub;
+  const hdrTitleEl = document.getElementById('hdr-title');
+  if(hdrTitleEl) hdrTitleEl.textContent = 'Contact Center Hub';
+  const hdrSubEl = document.getElementById('hdr-sub');
+  if(hdrSubEl) hdrSubEl.textContent = curLang==='tr' ? 'Kapasite Hesaplama · Bilgi · Trendler' : 'Capacity Planning · Knowledge · Trends';
   // Mode bar
   document.querySelector('.mode-label').textContent = L.modeLabel;
-  document.querySelectorAll('.mtab')[0].textContent = L.modeBasit;
-  document.querySelectorAll('.mtab')[1].textContent = L.modeOmni;
-  // Mode desc
-  const isOmni = document.getElementById('panel-omni').style.display !== 'none';
-  document.getElementById('mode-desc').textContent = isOmni ? L.modeDescOmni : L.modeDescBasit;
+  const hesapBtn = document.getElementById('mtab-hesap');
+  const bilgiBtn = document.getElementById('mtab-bilgi');
+  if(hesapBtn) hesapBtn.textContent = curLang==='tr' ? '🧮 Kapasite Hesaplama' : '🧮 Capacity Calculator';
+  if(bilgiBtn) bilgiBtn.textContent = curLang==='tr' ? '📚 Bilgi Bankası' : '📚 Knowledge Base';
+  const stabTemel = document.getElementById('stab-temel');
+  const stabOmni = document.getElementById('stab-omni');
+  if(stabTemel) stabTemel.textContent = curLang==='tr' ? '📞 Temel' : '📞 Simple';
+  if(stabOmni) stabOmni.textContent = curLang==='tr' ? '🌐 Omnichannel' : '🌐 Omnichannel';
+  // Mode desc - keep current
   // Basit form labels
   const labels = document.querySelectorAll('#panel-basit .flabel');
   if(labels.length >= 8) {
@@ -1032,6 +1279,59 @@ function applyLang() {
   // Omni calc button text
   const omniBtn = document.getElementById('btn-omni-calc');
   if(omniBtn) omniBtn.textContent = L.btnOmniCalc;
+
+  // Akademi sekme adı
+  const akademiBtn = document.getElementById('mtab-akademi');
+  if(akademiBtn) akademiBtn.textContent = L.modeAkademi || (curLang==='tr' ? '🎯 Planlama Akademisi' : '🎯 Planning Academy');
+
+  // Akademi içerik çevirileri
+  const akEls = {
+    "ak-title": curLang==='tr' ? "Planlama Akademisi" : "Planning Academy",
+    "ak-subtitle": curLang==='tr' ? "Çağrı merkezi ve contact center operasyonlarında temel formüller, kavramlar ve en iyi uygulamalar." : "Essential formulas, concepts and best practices in call center and contact center operations.",
+    "ak-eff-title": curLang==='tr' ? "📊 Verimlilik (Utilization) Hesaplama" : "📊 Efficiency (Utilization) Calculation",
+    "ak-eff-formula-title": curLang==='tr' ? "Formül" : "Formula",
+    "ak-eff-formula": curLang==='tr' ? "(AHT × Çağrı Sayısı) ÷ (Çalışma Süresi × Agent Sayısı) × 100" : "(AHT × Call Volume) ÷ (Work Time × Agent Count) × 100",
+    "ak-eff-ex-title": curLang==='tr' ? "Örnek" : "Example",
+    "ak-eff-range": curLang==='tr' ? "%70-80: İdeal aralık — yeterli yük, yeterli esneklik" : "70-80%: Ideal range — sufficient load, sufficient flexibility",
+    "ak-eff-high": curLang==='tr' ? "%85+: Kritik — bekleme süreleri artar, tükenmişlik riski" : "85%+: Critical — wait times increase, burnout risk",
+    "ak-eff-low": curLang==='tr' ? "%60 altı: Düşük — aşırı kadro veya düşük trafik" : "Below 60%: Low — overstaffing or low traffic",
+    "ak-sla-title": curLang==='tr' ? "⏱️ Hizmet Seviyesi (SLA) Hesaplama" : "⏱️ Service Level (SLA) Calculation",
+    "ak-sla-formula-title": curLang==='tr' ? "Formül" : "Formula",
+    "ak-sla-formula": curLang==='tr' ? "X saniyede cevaplanan çağrılar ÷ Toplam çağrılar × 100" : "Calls answered in X seconds ÷ Total calls × 100",
+    "ak-sla-why-title": curLang==='tr' ? "Neden Önemli?" : "Why Does It Matter?",
+    "ak-sla-phone": curLang==='tr' ? "Telefon: %80 / 20 saniye" : "Phone: 80% / 20 seconds",
+    "ak-sla-chat": curLang==='tr' ? "Live Chat: %80 / 30 saniye" : "Live Chat: 80% / 30 seconds",
+    "ak-sla-wa": curLang==='tr' ? "WhatsApp: %80 / 5 dakika" : "WhatsApp: 80% / 5 minutes",
+    "ak-sla-email": curLang==='tr' ? "E-mail: %90 / 4 saat" : "Email: 90% / 4 hours",
+    "ak-sla-tip": curLang==='tr' ? "SLA hedefini tutturmak için bu araçtaki kapasite hesaplayıcıyı kullanın." : "Use the capacity calculator on this tool to meet your SLA target.",
+    "ak-aht-title": curLang==='tr' ? "📞 AHT Nedir ve Nasıl Düşürülür?" : "📞 What is AHT and How to Reduce It?",
+    "ak-aht-comp-title": curLang==='tr' ? "AHT Bileşenleri" : "AHT Components",
+    "ak-aht-reduce-title": curLang==='tr' ? "AHT Düşürme Yolları" : "Ways to Reduce AHT",
+    "ak-aht-warn": curLang==='tr' ? "⚠️ Dikkat: AHT yapay düşürme kaliteyi bozar. Hedef hızlı değil, etkili çözüm olmalı." : "⚠️ Warning: Artificially reducing AHT harms quality. Aim for effective resolution, not speed.",
+    "ak-shrink-title": curLang==='tr' ? "📉 Shrinkage Nedir?" : "📉 What is Shrinkage?",
+    "ak-shrink-formula-title": curLang==='tr' ? "Formül" : "Formula",
+    "ak-shrink-formula": curLang==='tr' ? "Shrinkage = (Üretken olmayan saat ÷ Toplam çalışma saati) × 100" : "Shrinkage = (Non-productive hours ÷ Total working hours) × 100",
+    "ak-shrink-bench-title": curLang==='tr' ? "Sektör Kıyaslaması" : "Industry Benchmark",
+    "ak-shrink-ideal": curLang==='tr' ? "İdeal" : "Ideal",
+    "ak-shrink-avg": curLang==='tr' ? "Ortalama" : "Average",
+    "ak-shrink-high": curLang==='tr' ? "Yüksek" : "High",
+    "ak-shrink-tip": curLang==='tr' ? "💡 Shrinkage %35'i aşıyorsa operasyonel süreçlerin gözden geçirilmesi gerekir." : "💡 If shrinkage exceeds 35%, operational processes need review.",
+    "ak-omni-title": curLang==='tr' ? "🌐 Omnichannel Contact Center Trendleri 2026" : "🌐 Omnichannel Contact Center Trends 2026",
+    "ak-stat1": curLang==='tr' ? "Contact center'ların AI benimseme oranı" : "Contact center AI adoption rate",
+    "ak-stat2": curLang==='tr' ? "Rutin işler için AI, karmaşık için insan hibrit model" : "AI for routine, human for complex — hybrid model",
+    "ak-stat3": curLang==='tr' ? "Gerçek kesintisiz omnichannel deneyim yaşayan müşteri oranı" : "Customers experiencing truly seamless omnichannel",
+    "ak-trend-title": curLang==='tr' ? "Öne Çıkan Trendler" : "Key Trends",
+    "ak-channel-title": curLang==='tr' ? "Kanal Bazlı Eş Anlı Kapasite Kılavuzu" : "Channel Concurrent Capacity Guide",
+    "ak-ch-name": curLang==='tr' ? "Kanal" : "Channel",
+    "ak-ch-concurrent": curLang==='tr' ? "Eş Anlı" : "Concurrent",
+    "ak-ch-sl": curLang==='tr' ? "Tipik SLA" : "Typical SLA",
+    "ak-eff-tip": curLang==='tr' ? "💡 İpucu: Verimlilik hesaplarken ACW süresini de dahil edin." : "💡 Tip: Include ACW time when calculating efficiency.",
+    "ak-sla-tip-lbl": curLang==='tr' ? "İpucu:" : "Tip:",
+  };
+  Object.entries(akEls).forEach(([id, txt]) => {
+    const el = document.getElementById(id);
+    if(el) el.textContent = txt;
+  });
 
   // Channel header labels
   const chHIds = ['ch-h-kanal','ch-h-msgs','ch-h-aht','ch-h-acw','ch-h-es','ch-h-aktif'];
