@@ -1,0 +1,36 @@
+# Contact Center Hub — volkaneren.com
+# Kapasite Hesaplama & Bilgi Bankası
+
+## Site Hakkında
+volkaneren.com, çağrı merkezi (call center) ve contact center operasyonları için ücretsiz kapasite hesaplama aracı ve bilgi bankası sunar.
+Geliştirici: Volkan EREN | volkaneren34@hotmail.com
+
+## Ana Araçlar
+- Temel Kapasite Hesaplama: Erlang C tabanlı, telefon kanalı için agent sayısı hesaplama
+- Omnichannel Hesaplama: Telefon, WhatsApp, E-mail, Live Chat, Sosyal Medya, SMS için çok kanallı kapasite analizi
+- Bilgi Bankası: Çağrı merkezi metrikleri, SLA, AHT, shrinkage, omnichannel trendler
+
+## Hesaplama Parametreleri
+- AHT (Average Handle Time): Ortalama etkileşim süresi (saniye)
+- ACW (After Call Work): Çağrı sonrası işlem süresi
+- Shrinkage: Mola, toplantı, eğitim kayıp oranı (tipik: %20-30)
+- Hizmet Seviyesi (SLA): Hedef cevaplama oranı (tipik: %80)
+- Eş Anlı Kapasite: Bir agentin aynı anda yönetebileceği konuşma sayısı
+
+## Temel Formüller
+- Erlang A (Trafik Yükü): (Çağrı/Saat × AHT) ÷ (3600 × Eş Anlı Kapasite)
+- Nihai Agent İhtiyacı: Ham Agent ÷ (1 - Shrinkage%)
+- SLA: X saniyede cevaplanan çağrılar ÷ Toplam çağrılar × 100
+- Verimlilik: (AHT × Çağrı) ÷ (Çalışma Süresi × Agent) × 100
+
+## Kanal Bazlı Tipik Değerler
+- Telefon: Eş anlı=1, SLA=%80/20sn
+- WhatsApp: Eş anlı=3-4, SLA=%80/5dk
+- Live Chat: Eş anlı=3-4, SLA=%80/30sn
+- E-mail: Eş anlı=5-8, SLA=%90/4saat
+- Sosyal Medya: Eş anlı=4-6, SLA=%80/1saat
+
+## İletişim
+Web: https://www.volkaneren.com
+Email: volkaneren34@hotmail.com
+LinkedIn: https://www.linkedin.com/in/volkan-eren-6978661/
